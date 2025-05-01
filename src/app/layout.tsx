@@ -1,15 +1,23 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Luckiest_Guy, Bungee, Montserrat } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+import { UserProvider } from "@/context/UserContext";
+import { QuizHistoryProvider } from "@/context/QuizHistoryContext";
+const main = Luckiest_Guy({
+  variable: "--main",
   subsets: ["latin"],
+  weight: ["400"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const secondary = Bungee({
+  variable: "--secondary",
   subsets: ["latin"],
+  weight: ["400"],
+});
+const text = Montserrat({
+  variable: "--text",
+  subsets: ["latin"],
+  weight: ["400"],
 });
 
 export const metadata: Metadata = {
@@ -25,9 +33,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${main.variable} ${secondary.variable} ${text.variable} antialiased`}
       >
-        {children}
+        <UserProvider>
+          <QuizHistoryProvider>
+            {children}
+            </QuizHistoryProvider>
+        </UserProvider>
       </body>
     </html>
   );
