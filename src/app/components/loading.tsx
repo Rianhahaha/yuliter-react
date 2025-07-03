@@ -1,6 +1,6 @@
 import Bg from "@/component/bg";
+import Image from "next/image";
 import React from "react";
-import { Typewriter } from "react-simple-typewriter";
 
 export default function Loading() {
   return (
@@ -10,7 +10,7 @@ export default function Loading() {
         <div className="text-white font-main text-2xl">
           {/* <Typewriter words={['Memuat...']} loop={Infinity} delaySpeed={0} />
            */}
-          <div className="text-white font-main text-2xl">Memuat...</div>
+          <Image src="/loading.svg" alt="loading" height={100} width={100} />
         </div>
       </div>
     </>

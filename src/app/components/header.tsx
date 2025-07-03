@@ -35,9 +35,7 @@ export default function Navbar() {
 
       {user ? (
         <div className="flex items-center space-x-4">
-          <LinkButton link="/dashboard" text="Dashboard" />
-          <LinkButton link="/edit-profile" text="Edit Profil" />
-          
+          <LinkButton link="/dashboard" text="Dashboard" />          
           <ButtonDanger
             onClick={handleLogout}
           >

@@ -44,7 +44,7 @@ export const QuizHistoryProvider = ({ children }: { children: ReactNode }) => {
     if (data) {
       const normalized = data.map((item) => ({
         ...item,
-        profiles: item.profiles[0],
+        profiles: item.profiles[0] ?? {},
       }));
       setHistory(normalized);
     }

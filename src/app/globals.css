@@ -13,6 +13,9 @@
   --font-secondary: var(--secondary);
   --font-text: var(--text);
   --animate-shake: shake 0.5s ease-in-out;
+  --animate-shake-infinite: shake 0.5s ease-in-out infinite;
+  --animate-finish-bg: finish-bg 0.5s ease-in-out;
+  --animate-finish: finish 0.3s ease-in-out;
   --color-mainPink: #E80BAA;
   --color-mainPurple: #5D39EF;
   --color-mainBorder: #A122CD;
@@ -28,13 +31,33 @@
       transform: translate(4px, -4px);
     }
   }
-  --color-anjing: #FF00FF;
+  @keyframes finish {
+    0%
+    {
+      transform: scale(0);
+    }
+    90% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes finish-bg {
+    0%
+    {
+      opacity:0
+    }
+    100% {
+      opacity:100
+    }
+  }
 }
 .hovered {
   @apply transition-all duration-200 ease-in-out;
 }
 .main-container {
-  @apply border-mainBorder border-2 rounded-4xl bg-background/50 backdrop-blur-2xl p-[3rem];
+  @apply border-mainBorder/20 border-2 rounded-xl bg-background/50 backdrop-blur-2xl p-4 sm:p-[2rem];
 }
 .main-form {
   @apply border-mainBorder border-2 rounded-xl bg-white/10 backdrop-blur-2xl py-2 px-[1rem] w-full;
@@ -43,6 +66,15 @@
 .main-button {
   @apply w-fit px-10 py-3 rounded-full bg-gradient-to-bl from-mainPink to-mainPurple text-white font-main transition-all duration-200 ease-in-out border-t-2 text-lg border-white shadow-[inset_0px_-4px_0px_3px_#00000030] hover:shadow-[inset_0px_0px_0px_0px_#00000030] hover:translate-y-1 cursor-pointer tracking-widest;
 }
+.yellow-button {
+  @apply w-fit px-10 py-3 rounded-full bg-gradient-to-bl from-mainPink to-mainPurple text-white font-main transition-all duration-200 ease-in-out border-t-2 text-lg border-white shadow-[inset_0px_-4px_0px_3px_#00000030] hover:shadow-[inset_0px_0px_0px_0px_#00000030] hover:translate-y-1 cursor-pointer tracking-widest;
+}
+.score-button {
+  @apply w-fit px-10 py-3 rounded-full bg-gradient-to-bl from-yellow-400 to-amber-500 text-white font-main transition-all duration-200 ease-in-out border-t-2 text-lg border-white shadow-[inset_0px_-4px_0px_3px_#00000030] hover:shadow-[inset_0px_0px_0px_0px_#00000030] hover:translate-y-1 cursor-pointer tracking-widest;
+}
+.success-button {
+  @apply w-fit px-10 py-3 rounded-full bg-gradient-to-bl from-emerald-400 to-green-500 text-white font-main transition-all duration-200 ease-in-out border-t-2 text-lg border-white shadow-[inset_0px_-4px_0px_3px_#00000030] hover:shadow-[inset_0px_0px_0px_0px_#00000030] hover:translate-y-1 cursor-pointer tracking-widest;
+}
 .danger-button {
   @apply cursor-pointer w-fit px-10 py-3 rounded-full bg-gradient-to-bl from-pink-800 to-red-500 text-white font-main transition-all duration-200 ease-in-out border-t-2 text-lg border-white shadow-[inset_0px_-4px_0px_3px_#00000030] hover:shadow-[inset_0px_0px_0px_0px_#00000030] hover:translate-y-1 tracking-widest;
 }
@@ -50,7 +82,12 @@
   background:linear-gradient(-120deg, #4285f4, #34a853, #fbbc05, #ea4335);
   @apply cursor-pointer w-fit px-10 py-3 rounded-full text-white font-main transition-all duration-200 ease-in-out border-t-2 text-lg border-white shadow-[inset_0px_-4px_0px_3px_#00000030] hover:shadow-[inset_0px_0px_0px_0px_#00000030] hover:translate-y-1 tracking-widest;
 }
-
+.dashboard-item {
+  @apply  relative  w-full h-[15rem] p-5 rounded-xl bg-gradient-to-tr to-transparent text-white font-main transition-all duration-200 ease-in-out border-t text-lg border-white/20 shadow-[inset_0px_-4px_0px_3px_#00000030] hover:scale-[102%] tracking-widest;
+}
+.leaderboard-item {
+  @apply  relative  w-2/3 p-5 rounded-xl bg-gradient-to-t text-white font-main transition-all duration-200 ease-in-out border-t text-lg border-white/20 shadow-[inset_0px_-4px_0px_3px_#00000030] hover:-translate-y-2 tracking-widest;
+}
 
 body {
   color:white;

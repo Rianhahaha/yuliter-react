@@ -3,11 +3,18 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/utils/supabaseClient';
-import Bg from '@/component/bg';
 import AvatarUploader from './avatar-uploader';
 import { useUser } from '@/context/UserContext';
+import Loading from '../components/loading';
+import Image from 'next/image';
+type EditProfilePageProps = {
+  avatar_url: string;
 
-export default function EditProfilePage() {
+};
+export default function EditProfilePage({
+  avatar_url,
+
+}: EditProfilePageProps) {
   const router = useRouter();
   const [fullName, setFullName] = useState('');
   const [username, setUsername] = useState('');
@@ -70,31 +77,44 @@ export default function EditProfilePage() {
     router.push('/dashboard');
   };
 
-  if (loading) return <p>Loading...</p>;
+    if (loading) {
+      return (
+        <Loading  />
+      );
+    }
 
   return (
     <>
-    <Bg/>
-    <main className="max-w-xl mx-auto mt-10 space-y-4">
-      <h1 className="text-2xl font-bold text-center">Edit Profil</h1>
-      <div className="space-y-2">
+    <main className="w-full main-container">
+      <div className="max-w-3xl mx-auto">
+
+      <h1 className="text-xl sm:text-2xl md:text-5xl font-main tracking-wider mb-3 text-center">Pengaturan Profil</h1>
+      <div className="space-y-5">
         <div>
-        {user && <AvatarUploader userId={user.id} />}
+          
+        {/* {user && <AvatarUploader userId={user.id} />}
+                        <Image
+                  src={avatar_url || "/default_profile.svg"}
+                  alt="quiz"
+                  width={300}
+                  height={300}
+                  className="w-full h-full object-cover object-center"
+                /> */}
         </div>
         <label className="block">
-          <span>Nama Lengkap</span>
+          <span className='font-main tracking-wider'>Nama Lengkap</span>
           <input
             type="text"
-            className="w-full border p-2 rounded"
+            className="w-full border p-2 main-form !rounded-xl"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
             />
         </label>
         <label className="block">
-          <span>Username</span>
+          <span className='font-main tracking-wider'>Username</span>
           <input
             type="text"
-            className="w-full border p-2 rounded"
+            className="w-full border p-2  main-form !rounded-xl"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             />
@@ -103,11 +123,12 @@ export default function EditProfilePage() {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+          className="main-button !w-full"
           >
           {saving ? 'Menyimpan...' : 'Simpan'}
         </button>
       </div>
+            </div>
     </main>
           </>
   );

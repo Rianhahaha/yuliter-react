@@ -3,10 +3,11 @@ import LinkButton from "./buttons/link-button";
 
 export default function Section2() {
   return (
+    <>
     <div
       className="h-screen flex justify-center items-center bg-background2 rounded-t-[5rem] p-[6rem]"
       id="section2"
-    >
+      >
       <div className="w-1/2 flex justify-center">
         <Image src={"/file.svg"} alt="" height={500} width={500} />
       </div>
@@ -26,5 +27,17 @@ export default function Section2() {
         </div>
       </div>
     </div>
+    <div
+      className="h-full flex justify-center items-center bg-background2 rounded-t-[5rem] p-[6rem] border">
+        <div className="w-[10rem] text-center bg-amber-200 text-black border-2 p-5 box-border">
+          <div>
+
+          adsa
+          <a href="http://www.onlinewebfonts.com">Web Fonts</a>
+          </div>
+        </div>
+     
+    </div>
+      </>
   );
 }

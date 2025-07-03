@@ -7,6 +7,7 @@ import { supabase } from '@/utils/supabaseClient';
 type User = {
   id: string;
   email: string;
+  username?: string;
   full_name?: string;
   avatar_url?: string;
 };
@@ -22,7 +23,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
       if (user) {
         const { data: profile } = await supabase
           .from('profiles')
-          .select('full_name, avatar_url')
+          .select('full_name, avatar_url, username')
           .eq('id', user.id)
           .single();
 
@@ -30,6 +31,8 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
           id: user.id,
           email: user.email ?? '',
           full_name: profile?.full_name ?? '',
+          username: profile?.username ?? '',
+          avatar_url: profile?.avatar_url ?? '',
         });
       }
     };
