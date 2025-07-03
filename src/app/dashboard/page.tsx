@@ -40,14 +40,13 @@ export default function DashboardPage() {
       text: "Menu Utama",
       pages: (
         <MainDashboard
-          avatar_url={user?.avatar_url || ""}
           quizHistory={history}
         />
       ),
     },
     {
       text: "Pengaturan",
-      pages: <EditProfilePage avatar_url={user?.avatar_url || ""} />,
+      pages: <EditProfilePage  />,
     },
     {
       text: "Peringkat",

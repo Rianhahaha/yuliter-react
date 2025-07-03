@@ -41,7 +41,7 @@ export default function VerifikasiPassword({
   const handleSubmit = () => {
     const timeUsedPercentage = (timeLimit - timeLeft) / timeLimit;
 
-    let computedScore = score
+    const computedScore = score
       ? 10 - Math.round(10 * timeUsedPercentage)
       : 5 - Math.round(5 * timeUsedPercentage);
 

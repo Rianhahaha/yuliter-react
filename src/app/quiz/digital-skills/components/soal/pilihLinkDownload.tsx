@@ -12,7 +12,7 @@ export default function PilihLinkDownload({
   const [showAd, setShowAd] = useState(false); // Untuk kontrol pop-up iklan
   const [showAdDownload, setShowAdDownload] = useState(false); // Untuk kontrol pop-up iklan
   const [hasClickedOnce, setHasClickedOnce] = useState(false);
-  let [score, setScore] = useState<number | null>(null);
+  const [score, setScore] = useState<number | null>(null);
   const [showFinish, setShowFinish] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -64,7 +64,7 @@ const handleClick = (isCorrect: boolean) => {
   }
 
 const timeUsedPercentage = (timeLimit - timeLeft) / timeLimit;
-let computedScore = isCorrect
+const computedScore = isCorrect
   ? 10 - Math.round(10 * timeUsedPercentage)
   : -5 - Math.round(5 * timeUsedPercentage);
 setScore(computedScore);

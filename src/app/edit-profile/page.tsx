@@ -3,25 +3,15 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/utils/supabaseClient';
-import AvatarUploader from './avatar-uploader';
-import { useUser } from '@/context/UserContext';
 import Loading from '../components/loading';
-import Image from 'next/image';
-type EditProfilePageProps = {
-  avatar_url: string;
 
-};
-export default function EditProfilePage({
-  avatar_url,
-
-}: EditProfilePageProps) {
+export default function EditProfilePage() {
   const router = useRouter();
   const [fullName, setFullName] = useState('');
   const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const user = useUser();
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -91,15 +81,6 @@ export default function EditProfilePage({
       <h1 className="text-xl sm:text-2xl md:text-5xl font-main tracking-wider mb-3 text-center">Pengaturan Profil</h1>
       <div className="space-y-5">
         <div>
-          
-        {/* {user && <AvatarUploader userId={user.id} />}
-                        <Image
-                  src={avatar_url || "/default_profile.svg"}
-                  alt="quiz"
-                  width={300}
-                  height={300}
-                  className="w-full h-full object-cover object-center"
-                /> */}
         </div>
         <label className="block">
           <span className='font-main tracking-wider'>Nama Lengkap</span>

@@ -15,7 +15,6 @@ export default function PilihFileHRD({
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [timeLeft, setTimeLeft] = useState(timeLimit);
   const [showFinish, setShowFinish] = useState(false);
-  const [isCorrect, setisCorrect] = useState(false);
   const [score, setScore] = useState<number | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -85,7 +84,7 @@ export default function PilihFileHRD({
     setSelectedIndex(index);
     const timeUsedPercentage = (timeLimit - timeLeft) / timeLimit;
 
-    let computedScore = files[index].isTrue
+    const computedScore = files[index].isTrue
       ? 10 - Math.round(10 * timeUsedPercentage)
       : 5 - Math.round(5 * timeUsedPercentage);
 

@@ -185,7 +185,7 @@ export default function SoalDeteksiHoaks({
     setSelectedIndex(index);
     const timeUsedPercentage = (timeLimit - timeLeft) / timeLimit;
 
-let computedScore = item.isHoax
+const computedScore = item.isHoax
   ? 10 - Math.round(10 * timeUsedPercentage)
   : 5 - Math.round(5 * timeUsedPercentage);
 

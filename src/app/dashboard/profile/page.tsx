@@ -1,8 +1,7 @@
 "use client"
 import { useUser } from "@/context/UserContext";
 import { useQuizHistory } from "@/context/QuizHistoryContext";
-import {useEffect, useState} from 'react';
-import {supabase} from '@/utils/supabaseClient';
+
 
 
 export default function ProfilePage() {

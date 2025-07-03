@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { supabase } from "@/utils/supabaseClient";
 import { User } from "@supabase/supabase-js";
 import LinkButton from "./home/buttons/link-button";
-import ButtonDanger from "./home/buttons/button-danger";
 import Logo from "./logo";
 
 export default function Navbar() {
@@ -35,12 +34,10 @@ export default function Navbar() {
 
       {user ? (
         <div className="flex items-center space-x-4">
-          <LinkButton link="/dashboard" text="Dashboard" />          
-          <ButtonDanger
-            onClick={handleLogout}
-          >
+          <LinkButton link="/dashboard" text="Dashboard" />    
+          <button className="danger-button"  onClick={handleLogout}>
             Logout
-          </ButtonDanger>
+            </button>      
         </div>
       ) : (
         <LinkButton link="/login" text="Login" />

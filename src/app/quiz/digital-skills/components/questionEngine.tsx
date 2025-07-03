@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { QUESTIONS } from './questions';
-import { shuffle } from '@/utils/shuffle';
 import PilihLinkDownload from './soal/pilihLinkDownload';
 import Password from './soal/password';
 import SaringLowongan from './soal/saringLowongan';
-import TutupPopup from './soal/tutupPopUp';
 import pilihHoax from './soal/pilihHoax';
 import pilihEmail from './soal/pilihEmail';
 import KirimJawabanEmailHRD from './soal/KirimJawabanEmailHRD';
@@ -13,15 +11,15 @@ import AmankanDokumenCloud from './soal/amankanFileCloud';
 import SoalCocokkanAplikasi from './soal/cocokkanAplikasi';
 import VerifikasiPassword from './soal/verifikasiPassword';
 const componentMap: Record<string, any> = {
-  // pilih_link_download: PilihLinkDownload,
-  // Password: Password,
-  // VerifikasiPassword: VerifikasiPassword,
-  // Lowongan: SaringLowongan,
-  // Pilih_Hoax: pilihHoax,
-  // Email: pilihEmail,
-  // KirimJawabanEmailHRD: KirimJawabanEmailHRD,
-  // PilihFileHRD: PilihFileHRD,
-  // AmankanDokumenCloud: AmankanDokumenCloud,
+  pilih_link_download: PilihLinkDownload,
+  Password: Password,
+  VerifikasiPassword: VerifikasiPassword,
+  Lowongan: SaringLowongan,
+  Pilih_Hoax: pilihHoax,
+  Email: pilihEmail,
+  KirimJawabanEmailHRD: KirimJawabanEmailHRD,
+  PilihFileHRD: PilihFileHRD,
+  AmankanDokumenCloud: AmankanDokumenCloud,
   CocokkanAplikasi: SoalCocokkanAplikasi,
   
 };

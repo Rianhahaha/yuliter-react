@@ -16,7 +16,7 @@ export default function AmankanDokumenCloud({
   const [timeLeft, setTimeLeft] = useState(timeLimit);
   const [submitted, setSubmitted] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  let [score, setScore] = useState<number | null>(null);
+  const [score, setScore] = useState<number | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const [showFinish, setShowFinish] = useState(false);
 
@@ -55,7 +55,7 @@ export default function AmankanDokumenCloud({
     setSubmitted(true);
 
     const timeUsedPercentage = (timeLimit - timeLeft) / timeLimit;
-    let computedScore = viewOnly
+    const computedScore = viewOnly
       ? 10 - Math.round(10 * timeUsedPercentage)
       : 5 - Math.round(5 * timeUsedPercentage);
     setScore(computedScore);

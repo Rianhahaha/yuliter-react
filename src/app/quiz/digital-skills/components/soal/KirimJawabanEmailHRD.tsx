@@ -86,7 +86,7 @@ const shuffled = [...CORRECT_ORDER].sort(() => Math.random() - 0.5);
       const oldIndex = items.indexOf(active.id);
       const newIndex = items.indexOf(over.id);
       setItems(arrayMove(items, oldIndex, newIndex));
-      setHasInteracted(true);
+      setHasInteracted(hasInteracted || true);
     }
   };
 
@@ -126,7 +126,7 @@ const handleSubmit = () => {
               items={items}
               strategy={verticalListSortingStrategy}
             >
-              {items.map((item, index) => (
+              {items.map((item) => (
                 <SortableItem key={item} id={item} />
               ))}
             </SortableContext>

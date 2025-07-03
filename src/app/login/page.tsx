@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/utils/supabaseClient";
 import Bg from "@/component/bg";
-import Button from "../components/home/buttons/button";
 import Image from "next/image";
 
 export default function LoginPage() {
@@ -69,7 +68,9 @@ export default function LoginPage() {
               required
             />
             {error && <p className="text-red-500">{error}</p>}
-            <Button type="submit" className="!w-full">Login</Button>
+                      <button className="success-button"  type="submit">
+            Login
+            </button>  
 
           </form>
 

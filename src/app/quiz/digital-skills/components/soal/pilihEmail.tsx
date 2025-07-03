@@ -101,7 +101,7 @@ export default function SoalPilihEmail({
     if (selectedIndex !== null) return;
     setSelectedIndex(index);
     const timeUsedPercentage = (timeLimit - timeLeft) / timeLimit;
-let computedScore = shuffledEmails[index].isLegit
+const computedScore = shuffledEmails[index].isLegit
   ? 10 - Math.round(10 * timeUsedPercentage)
   : 5 - Math.round(5 * timeUsedPercentage);
 setScore(computedScore);

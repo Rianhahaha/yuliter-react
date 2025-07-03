@@ -194,7 +194,7 @@ export default function SoalFilterLowongan({
       job.salary === selectedCase.filter.salary;
 
     const timeUsedPercentage = (timeLimit - timeLeft) / timeLimit;
-    let computedScore = isCorrect
+    const computedScore = isCorrect
       ? 10 - Math.round(10 * timeUsedPercentage)
       : 5 - Math.round(5 * timeUsedPercentage);
     setScore(computedScore);

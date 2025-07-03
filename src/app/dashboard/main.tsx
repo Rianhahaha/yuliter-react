@@ -7,12 +7,10 @@ import { useLeaderboard } from "@/context/LeaderboardContext"; // Ambil dari con
 import Loading from "../components/loading";
 
 type MainDashboardProps = {
-  avatar_url: string;
   // score: number;
   quizHistory: QuizResult[];
 };
 export default function MainDashboard({
-  avatar_url,
   quizHistory,
 }: MainDashboardProps) {
   const [loading, setLoading] = useState(true);
@@ -40,7 +38,7 @@ export default function MainDashboard({
     }, 4000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [messages.length]);
   const currentMessage = messages[index].replace(
     "{name}",
     user?.full_name || "kamu"

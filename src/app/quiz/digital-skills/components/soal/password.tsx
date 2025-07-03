@@ -13,7 +13,7 @@ export default function PasswordStrength({
   const timeLimit = 30;
   const [timeLeft, setTimeLeft] = useState(timeLimit);
   const [password, setPassword] = useState("");
-  let [score, setScore] = useState(1);
+  const [score, setScore] = useState(1);
   const [submitted, setSubmitted] = useState(false);
   const [showFinish, setShowFinish] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -72,7 +72,7 @@ export default function PasswordStrength({
   const handleSubmit = () => {
  const timeUsedPercentage = (timeLimit - timeLeft) / timeLimit;
 
-let computedScore = score - Math.round(10 * timeUsedPercentage)
+const computedScore = score - Math.round(10 * timeUsedPercentage)
 
 
 setScore(computedScore);

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { DndContext, useDraggable, useDroppable } from "@dnd-kit/core";
 import SoalContainer from "./soalContainer";
 import Image from "next/image";
@@ -53,33 +53,33 @@ export default function SoalCocokkanAplikasi({
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const [correctCount, setCorrectCount] = useState(0);
 
-  // useEffect(() => {
-  //   if (showFinish) {
-  //     if (timerRef.current) {
-  //       clearInterval(timerRef.current);
-  //       timerRef.current = null;
-  //     }
-  //     return;
-  //   }
+  useEffect(() => {
+    if (showFinish) {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+      return;
+    }
 
-  //   timerRef.current = setInterval(() => {
-  //     setTimeLeft((prev) => {
-  //       if (prev <= 1) {
-  //         clearInterval(timerRef.current!);
-  //         timerRef.current = null;
-  //         return 0;
-  //       }
-  //       return prev - 1;
-  //     });
-  //   }, 1000);
+    timerRef.current = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(timerRef.current!);
+          timerRef.current = null;
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
 
-  //   return () => {
-  //     if (timerRef.current) {
-  //       clearInterval(timerRef.current);
-  //       timerRef.current = null;
-  //     }
-  //   };
-  // }, [showFinish]);
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+  }, [showFinish]);
 
   const handleDragEnd = (event: any) => {
     const { active, over } = event;
@@ -100,7 +100,7 @@ export default function SoalCocokkanAplikasi({
     const timeUsedPercentage = (timeLimit - timeLeft) / timeLimit;
 
     // Skor maksimal 10 jika benar semua, 5 jika salah sebagian
-    let baseScore = correct === targets.length ? 10 : correct * 2; // contoh skoring: 2 poin per benar
+    const baseScore = correct === targets.length ? 10 : correct * 2; // contoh skoring: 2 poin per benar
 
     // Penalti waktu: semakin lama, semakin sedikit skor
     let computedScore = baseScore - Math.round(baseScore * timeUsedPercentage);

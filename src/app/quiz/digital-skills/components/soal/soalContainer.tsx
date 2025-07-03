@@ -1,7 +1,7 @@
 interface SoalContainerProps {
   children: React.ReactNode;
-  timeLeft: any;
-  question: String;
+  timeLeft: number;
+  question: string;
 }
 export default function SoalContainer({
   children,

@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, ReactNode, useCallback } from "react";
 import { supabase } from "@/utils/supabaseClient";
 import { useUser } from "@/context/UserContext";
 
@@ -27,7 +27,7 @@ export const QuizHistoryProvider = ({ children }: { children: ReactNode }) => {
   const profile_id = user?.id;
   const [history, setHistory] = useState<QuizResult[]>([]);
 
-  const fetchHistory = async () => {
+  const fetchHistory = useCallback( async () => {
     if (!profile_id) return;
 
     const { data, error } = await supabase
@@ -48,13 +48,13 @@ export const QuizHistoryProvider = ({ children }: { children: ReactNode }) => {
       }));
       setHistory(normalized);
     }
-  };
+  }, [profile_id]);
 
   useEffect(() => {
     if (profile_id) {
       fetchHistory();
     }
-  }, [profile_id]);
+  }, [profile_id, fetchHistory]);
 
   return (
     <QuizHistoryContext.Provider value={{ history, refreshHistory: fetchHistory }}>

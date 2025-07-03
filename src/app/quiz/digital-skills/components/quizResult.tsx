@@ -2,11 +2,10 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 export default function QuizResult({
   score,
   duration,
-  answers,
   onRestart,
 }: {
   score: number;
@@ -16,8 +15,6 @@ export default function QuizResult({
 }) {
   const [val, setval] = useState(0);
   const [time, setTime] = useState(0);
-  const finalScore = score;
-  const finalTime = 10;
   useEffect(() => {
     const interval = setInterval(() => {
       setval((prev) => {
@@ -36,7 +33,7 @@ export default function QuizResult({
     }, 50); // Sesuaikan durasi animasi
 
     return () => clearInterval(interval);
-  }, [score, duration]); // Perlu ini agar efek ter-update
+  }, [score, duration, val, time]); // Perlu ini agar efek ter-update
   return (
     <>
       <div className="max-h-[50rem] h-full max-w-4xl m-auto">

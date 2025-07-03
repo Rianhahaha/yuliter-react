@@ -6,7 +6,7 @@ interface FinishPopupProps {
   children: React.ReactNode;
 }
 
-export default function FinishPopup({ score, onClose, children }: FinishPopupProps) {
+export default function FinishPopup({  onClose, children }: FinishPopupProps) {
   return (
     <div className="absolute w-full h-full bg-black/60 backdrop-blur-md z-50 font-normal animate-finish-bg ">
       <div className="size-full flex items-center justify-center">
