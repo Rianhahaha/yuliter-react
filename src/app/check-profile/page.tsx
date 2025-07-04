@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/utils/supabaseClient';
+import Loading from '../components/loading';
 
 export default function CheckProfile() {
   const router = useRouter();
@@ -57,5 +58,5 @@ export default function CheckProfile() {
     checkOrCreateProfile();
   }, [router]);
 
-  return <p>Loading...</p>;
+  return <Loading />;
 }

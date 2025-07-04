@@ -210,7 +210,7 @@ setShowFinish(true);
         <FinishPopup score={score} onClose={handleFinish}>
           <div className="text-3xl mb-2 w-full text-center space-y-2">
             <div>
-              {allHeadlines[selectedIndex!].isHoax
+              {selectedIndex
                 ? "Yay! Jawabanmu benar!"
                 : "Lebih teliti lagi yaaaa :D"}
             </div>

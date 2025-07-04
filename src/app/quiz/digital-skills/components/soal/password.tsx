@@ -172,9 +172,9 @@ setShowFinish(true);
           <FinishPopup score={score} onClose={handleFinish}>
             <div className="sm:text-2xl md:text-3xl mb-2 w-full text-center space-y-2">
               <div>
-                {score <= 2
+                {score <= 4
                   ? "Kombinasimu kurang kuat nih, gampang dibobol loh nanti! :)"
-                  : score === 3 || score === 4
+                  : score === 8
                   ? "Lumayan~ tapi masih kurang kuat nih passwordmu! :)"
                   : "Bagus! Passwordmu sangat kuat! :D"}
               </div>

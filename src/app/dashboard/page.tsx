@@ -23,6 +23,14 @@ export default function DashboardPage() {
   const user = useUser();
   const { history } = useQuizHistory();
 
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/login");
+    }
+  }, [user, router]);
+
+  if (!user) return <Loading />; // Optionally show loading or blank while redirecting
   const handleOpen = () => {
     setOpen(!open);
   };

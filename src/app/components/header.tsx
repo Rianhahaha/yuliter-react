@@ -28,7 +28,7 @@ export default function Navbar() {
 
   return (
     <nav className="bg-transparent fixed w-full px-[6rem] py-[1rem] flex justify-between items-center">
-      <Link href="/">
+      <Link href="#">
         <Logo/>
       </Link>
 
@@ -40,7 +40,7 @@ export default function Navbar() {
             </button>      
         </div>
       ) : (
-        <LinkButton link="/login" text="Login" />
+        <LinkButton link="/login" text="Masuk" />
       )}
     </nav>
   );

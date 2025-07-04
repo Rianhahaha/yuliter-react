@@ -87,7 +87,7 @@ export default function AmankanDokumenCloud({
         <FinishPopup score={score} onClose={handleFinish}>
             <div className="sm:text-2xl md:text-3xl mb-2 w-full text-center space-y-2">
             <div>
-              {viewOnly ? "Yay! Dokuemnmu dibagikan tanpa akses edit! Kerja bagus!" : "HRD jadi bisa edit dong :( Teliti lagi yaa!"}
+              {viewOnly ? "Yay! Dokumenmu dibagikan tanpa akses edit! Kerja bagus!" : "HRD jadi bisa edit dong :( Teliti lagi yaa!"}
               </div>
               <div className="text-xs sm:text-sm">
               Silakan lanjut mengerjakan! Semangat!</div>

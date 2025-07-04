@@ -1,7 +1,7 @@
 // app/quiz/page.tsx atau src/app/quiz/page.tsx (tergantung struktur)
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import QuestionEngine from "./components/questionEngine";
 import QuizResult from "./components/quizResult";
 import { supabase } from "@/utils/supabaseClient";
@@ -9,17 +9,28 @@ import { useUser } from "@/context/UserContext"; // asumsi kamu pakai ini
 import Bg from "@/component/bg";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import Loading from "@/app/components/loading";
+
+
 
 type Answer = number;
 
 export default function QuizPage() {
+  const router = useRouter();
   const [started, setStarted] = useState(false);
   const [finished, setFinished] = useState(false);
   const [score, setScore] = useState(0);
   const [duration, setDuration] = useState(0);
   const [answers, setAnswers] = useState<Answer[]>([]);
   const user = useUser(); // pastikan kamu punya user context
+  useEffect(() => {
+    if (!user) {
+      router.push("/login");
+    }
+  }, [user, router]);
 
+  if (!user) return <Loading />; // Optionally show loading or blank while redirecting
   const handleFinish = async (
     finalScore: number,
     finalAnswers: number[],
