@@ -28,6 +28,8 @@ export default function DashboardPage() {
     if (!user) {
       router.push("/login");
     }
+    setLoading(false);
+
   }, [user, router]);
 
   if (!user) return <Loading />; // Optionally show loading or blank while redirecting
@@ -62,9 +64,7 @@ export default function DashboardPage() {
     },
   ];
 
-  useEffect(() => {
-    setLoading(false);
-  }, []);
+
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
