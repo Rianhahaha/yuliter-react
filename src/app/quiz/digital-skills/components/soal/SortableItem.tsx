@@ -13,6 +13,7 @@ export default function SortableItem({ id }: { id: string }) {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+     touchAction: "none" ,
   };
 
 
@@ -21,7 +22,7 @@ export default function SortableItem({ id }: { id: string }) {
       ref={setNodeRef}
       {...attributes}
       {...listeners}
-      className="bg-white border border-gray-200 rounded p-2 shadow-sm cursor-move"
+      className="bg-white border border-gray-200 rounded p-2 shadow-sm cursor-move !touch-none"
       style={style}
     >
       {id}

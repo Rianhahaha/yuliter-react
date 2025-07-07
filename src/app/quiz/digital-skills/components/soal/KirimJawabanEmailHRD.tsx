@@ -13,6 +13,8 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import { restrictToWindowEdges } from "@dnd-kit/modifiers";
+
 import SortableItem from "./SortableItem";
 import SoalContainer from "./soalContainer";
 import FinishPopup from "@/app/quiz/digital-skills/components/finishPopUp";
@@ -49,7 +51,7 @@ export default function KirimJawabanEmailHRD({
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-const shuffled = [...CORRECT_ORDER].sort(() => Math.random() - 0.5);
+    const shuffled = [...CORRECT_ORDER].sort(() => Math.random() - 0.5);
     setItems(shuffled);
   }, []);
 
@@ -93,18 +95,18 @@ const shuffled = [...CORRECT_ORDER].sort(() => Math.random() - 0.5);
     }
   };
 
-const handleSubmit = () => {
-  const isCorrect = items.every((item, i) => item === CORRECT_ORDER[i]);
+  const handleSubmit = () => {
+    const isCorrect = items.every((item, i) => item === CORRECT_ORDER[i]);
 
     const computedScore = evaluateScore({
       isCorrect: isCorrect,
       timeUsed: timeLimit - timeLeft,
       timeLimit: timeLimit,
     });
-  setIsCorrect(isCorrect); // simpan benar atau salah
-  setScore(computedScore);
-  setShowFinish(true);
-};
+    setIsCorrect(isCorrect); // simpan benar atau salah
+    setScore(computedScore);
+    setShowFinish(true);
+  };
   const handleFinish = () => {
     if (score !== null) {
       onFinish(score, timeLimit - timeLeft);
@@ -128,6 +130,7 @@ const handleSubmit = () => {
             sensors={sensors}
             collisionDetection={closestCenter}
             onDragEnd={handleDragEnd}
+            modifiers={[restrictToWindowEdges]}
           >
             <SortableContext
               items={items}
