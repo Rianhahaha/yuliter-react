@@ -1,10 +1,21 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { DndContext, useDraggable, useDroppable } from "@dnd-kit/core";
+import {
+  DndContext,
+  useDraggable,
+  useDroppable,
+
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import { restrictToWindowEdges } from "@dnd-kit/modifiers";
 import SoalContainer from "./soalContainer";
 import Image from "next/image";
 import FinishPopup from "@/app/quiz/digital-skills/components/finishPopUp";
+import { evaluateScore } from "@/utils/evaluate";
+import StartPopup from "../startPopUp";
 
 type AppItem = {
   id: string;
@@ -44,7 +55,7 @@ export default function SoalCocokkanAplikasi({
   onFinish: (score: number, duration: number) => void;
 }) {
   const timeLimit = 30;
-
+const sensors = useSensors(useSensor(PointerSensor));
   const [timeLeft, setTimeLeft] = useState(timeLimit);
   const [answers, setAnswers] = useState<{ [key: string]: string }>({});
   const [submitted, setSubmitted] = useState(false);
@@ -52,9 +63,10 @@ export default function SoalCocokkanAplikasi({
   const [score, setScore] = useState<number | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const [correctCount, setCorrectCount] = useState(0);
+  const [showStart, setShowStart] = useState(true);
 
   useEffect(() => {
-    if (showFinish) {
+    if (showFinish || showStart) {
       if (timerRef.current) {
         clearInterval(timerRef.current);
         timerRef.current = null;
@@ -79,8 +91,15 @@ export default function SoalCocokkanAplikasi({
         timerRef.current = null;
       }
     };
-  }, [showFinish]);
-
+  }, [showFinish, showStart]);
+  useEffect(() => {
+    if (timeLeft === 0 && !showFinish) {
+      setScore(
+        evaluateScore({ isCorrect: false, timeUsed: timeLimit, timeLimit })
+      );
+      setShowFinish(true);
+    }
+  }, [timeLeft, showFinish]);
   const handleDragEnd = (event: any) => {
     const { active, over } = event;
     if (over) {
@@ -115,28 +134,37 @@ export default function SoalCocokkanAplikasi({
     }
     setShowFinish(false);
   };
-
+  const soal = `
+     Cocokkan aplikasi kolaborasi berikut dengan fungsi utamanya! Geser Icon kedalam keterangan yang benar!
+      
+      `;
   return (
-    <SoalContainer
-      timeLeft={timeLeft}
-      question="Cocokkan aplikasi kolaborasi berikut dengan fungsi utamanya! Geser Icon kedalam keterangan yang benar!"
-    >
+    <SoalContainer timeLimit={timeLimit} timeLeft={timeLeft} question={soal}>
+      {showStart && (
+        <StartPopup soal={soal} onClose={() => setShowStart(false)} />
+      )}
       <div className="text-lg sm:text-3xl mt-5">Geser icon kedalam kotak!</div>
       {showFinish && score !== null && (
-        <FinishPopup score={score} onClose={handleFinish}>
+        <FinishPopup
+          score={score}
+          timeLeft={timeLeft}
+          time={timeLimit - timeLeft}
+          onClose={handleFinish}
+        >
           <div className="text-3xl mb-2 w-full text-center space-y-2">
             <div>
               {correctCount === targets.length
                 ? "Yay! Jawabanmu benar semua!"
                 : "Ooops! jawaban kurang tepat, coba lagi ya!"}
             </div>
-            <div className="text-sm">Silakan lanjut mengerjakan! Semangat!</div>
           </div>
         </FinishPopup>
       )}
 
-      <DndContext onDragEnd={handleDragEnd}>
-        <div className="flex flex-col gap-6 overflow-y-auto mt-0 sm:mt-[3rem]">
+      <DndContext sensors={sensors}
+  onDragEnd={handleDragEnd}
+  modifiers={[restrictToWindowEdges]}>
+        <div className="flex flex-col gap-6 overflow-hidden mt-0 sm:mt-[3rem]">
           <div className="flex gap-4 justify-center">
             {apps.map((app) => (
               <DraggableItem key={app.id} id={app.id}>
@@ -192,10 +220,10 @@ function DraggableItem({
   return (
     <div
       ref={setNodeRef}
-      style={style}
+      style={{ ...style, touchAction: "none" }}
       {...listeners}
       {...attributes}
-      className="cursor-grab border rounded-full p-2 flex items-center border-gray-400 hover:brightness-125"
+      className="cursor-grab border rounded-full p-2 flex items-center border-gray-400 hover:brightness-125 !touch-none"
     >
       {children}
     </div>

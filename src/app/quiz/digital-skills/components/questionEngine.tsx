@@ -10,6 +10,7 @@ import PilihFileHRD from './soal/pilihFileHRD';
 import AmankanDokumenCloud from './soal/amankanFileCloud';
 import SoalCocokkanAplikasi from './soal/cocokkanAplikasi';
 import VerifikasiPassword from './soal/verifikasiPassword';
+import Loading from '@/app/components/loading';
 const componentMap: Record<string, any> = {
   pilih_link_download: PilihLinkDownload,
   Password: Password,
@@ -56,7 +57,7 @@ export default function QuestionEngine({
     }
   };
 
-  if (!questions.length) return <div>Loading soal...</div>;
+  if (!questions.length) return <Loading />;
 
   const current = questions[index];
   const SoalComponent = componentMap[current.type];

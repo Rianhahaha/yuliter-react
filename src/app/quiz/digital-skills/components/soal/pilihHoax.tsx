@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import SoalContainer from "./soalContainer";
 import FinishPopup from "@/app/quiz/digital-skills/components/finishPopUp";
+import { evaluateScore } from "@/utils/evaluate";
+import StartPopup from "../startPopUp";
 
 type HeadlineItem = {
   title: string;
@@ -146,14 +148,14 @@ export default function SoalDeteksiHoaks({
   const [showFinish, setShowFinish] = useState(false);
   const [score, setScore] = useState<number | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-  
+  const [showStart, setShowStart] = useState(true);
 
   useEffect(() => {
     setShuffled([...allHeadlines].sort(() => Math.random() - 0.5));
   }, []);
 
   useEffect(() => {
-    if (showFinish) {
+    if (showFinish || showStart) {
       if (timerRef.current) {
         clearInterval(timerRef.current);
         timerRef.current = null;
@@ -170,7 +172,7 @@ export default function SoalDeteksiHoaks({
         }
         return prev - 1;
       });
-    }, 1000);       
+    }, 1000);
 
     return () => {
       if (timerRef.current) {
@@ -178,44 +180,57 @@ export default function SoalDeteksiHoaks({
         timerRef.current = null;
       }
     };
-  }, [showFinish]);
-
+  }, [showFinish, showStart]);
+  useEffect(() => {
+    if (timeLeft === 0 && !showFinish) {
+      setScore(
+        evaluateScore({ isCorrect: false, timeUsed: timeLimit, timeLimit })
+      );
+      setShowFinish(true);
+    }
+  }, [timeLeft, showFinish]);
   const handleSelect = (item: HeadlineItem, index: number) => {
     if (selectedIndex !== null) return;
     setSelectedIndex(index);
-    const timeUsedPercentage = (timeLimit - timeLeft) / timeLimit;
-
-const computedScore = item.isHoax
-  ? 10 - Math.round(10 * timeUsedPercentage)
-  : 5 - Math.round(5 * timeUsedPercentage);
-
-setScore(computedScore);
-setShowFinish(true);
+    const compute = item.isHoax;
+    const computedScore = evaluateScore({
+      isCorrect: compute,
+      timeUsed: timeLimit - timeLeft,
+      timeLimit: timeLimit,
+    });
+    setScore(computedScore);
     setShowFinish(true);
-  
+    setShowFinish(true);
   };
 
   const handleFinish = () => {
     if (score !== null) {
-      onFinish(score, timeLimit - timeLeft)
+      onFinish(score, timeLimit - timeLeft);
     }
     setShowFinish(false);
   };
+  const soal = `
+      Klik salah satu hasil pencarian yang menurutmu adalah HOAKS!
+      
+      `;
+
   return (
-    <SoalContainer
-      timeLeft={timeLeft}
-      question={`Klik salah satu hasil pencarian yang menurutmu adalah HOAKS!`}
-    >
-      {(showFinish) && score !== null && (
-        <FinishPopup score={score} onClose={handleFinish}>
+    <SoalContainer timeLimit={timeLimit} timeLeft={timeLeft} question={soal}>
+      {showStart && (
+        <StartPopup soal={soal} onClose={() => setShowStart(false)} />
+      )}
+      {showFinish && score !== null && (
+        <FinishPopup
+          score={score}
+          timeLeft={timeLeft}
+          time={timeLimit - timeLeft}
+          onClose={handleFinish}
+        >
           <div className="text-3xl mb-2 w-full text-center space-y-2">
             <div>
               {selectedIndex
                 ? "Yay! Jawabanmu benar!"
                 : "Lebih teliti lagi yaaaa :D"}
-            </div>
-            <div className="text-sm">
-              Silakan lanjut mengerjakan! Semangat!
             </div>
           </div>
         </FinishPopup>
@@ -269,5 +284,3 @@ setShowFinish(true);
     </SoalContainer>
   );
 }
-
-

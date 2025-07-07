@@ -2,29 +2,31 @@ import Image from "next/image";
 import React, { useEffect, useState, useRef } from "react";
 import FinishPopup from "@/app/quiz/digital-skills/components/finishPopUp";
 import SoalContainer from "./soalContainer";
+import { evaluateScore } from "@/utils/evaluate";
+import StartPopup from "../startPopUp";
 export default function PilihLinkDownload({
   onFinish,
 }: {
   onFinish: (score: number, duration: number) => void;
 }) {
-    const timeLimit = 60;
+  const timeLimit = 60;
   const [timeLeft, setTimeLeft] = useState(timeLimit);
   const [showAd, setShowAd] = useState(false); // Untuk kontrol pop-up iklan
   const [showAdDownload, setShowAdDownload] = useState(false); // Untuk kontrol pop-up iklan
   const [hasClickedOnce, setHasClickedOnce] = useState(false);
   const [score, setScore] = useState<number | null>(null);
   const [showFinish, setShowFinish] = useState(false);
+  const [showStart, setShowStart] = useState(true);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    if (showFinish) {
+    if (showFinish || showStart) {
       if (timerRef.current) {
         clearInterval(timerRef.current);
         timerRef.current = null;
       }
       return;
     }
-
     timerRef.current = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
@@ -42,8 +44,16 @@ export default function PilihLinkDownload({
         timerRef.current = null;
       }
     };
-  }, [showFinish]);
+  }, [showFinish, showStart]);
 
+  useEffect(() => {
+    if (timeLeft === 0 && !showFinish) {
+      setScore(
+        evaluateScore({ isCorrect: false, timeUsed: timeLimit, timeLimit })
+      );
+      setShowFinish(true);
+    }
+  }, [timeLeft, showFinish]);
   useEffect(() => {
     const interval = setInterval(() => {
       setShowAdDownload(true);
@@ -56,21 +66,21 @@ export default function PilihLinkDownload({
     setShowAd(true);
   };
 
-const handleClick = (isCorrect: boolean) => {
-  if (!hasClickedOnce) {
-    setShowAdDownload(true);
-    setHasClickedOnce(true);
-    return;
-  }
+  const handleClick = (isCorrect: boolean) => {
+    if (!hasClickedOnce) {
+      setShowAdDownload(true);
+      setHasClickedOnce(true);
+      return;
+    }
 
-const timeUsedPercentage = (timeLimit - timeLeft) / timeLimit;
-const computedScore = isCorrect
-  ? 10 - Math.round(10 * timeUsedPercentage)
-  : -5 - Math.round(5 * timeUsedPercentage);
-setScore(computedScore);
-setShowFinish(true);
-
-};
+    const computedScore = evaluateScore({
+      isCorrect: isCorrect,
+      timeUsed: timeLimit - timeLeft,
+      timeLimit: timeLimit,
+    });
+    setScore(computedScore);
+    setShowFinish(true);
+  };
 
   const handleFinish = () => {
     if (score !== null) {
@@ -78,18 +88,19 @@ setShowFinish(true);
     }
     setShowFinish(false);
   };
-
-  return (
-    <>
-      <SoalContainer
-        timeLeft={timeLeft}
-        question={`
+  const soal = `
       Kamu hendak mengunduh Template CV untuk melamar kerja, kemudian kamu
           sudah menemukan web tersebut
           Unduh Template CV tersebut!, hati-hati sama iklan yaa
       
-      `}
-      >
+      `;
+
+  return (
+    <>
+      <SoalContainer timeLimit={timeLimit} timeLeft={timeLeft} question={soal}>
+        {showStart && (
+          <StartPopup soal={soal} onClose={() => setShowStart(false)} />
+        )}
         {showAdDownload && (
           <>
             <div
@@ -145,12 +156,14 @@ setShowFinish(true);
           </>
         )}
         {showFinish && score !== null && (
-          <FinishPopup score={score} onClose={handleFinish}>
+          <FinishPopup
+            score={score}
+            timeLeft={timeLeft}
+            time={timeLimit - timeLeft}
+            onClose={handleFinish}
+          >
             <div className="sm:text-2xl md:text-3xl mb-2 w-full text-center space-y-2">
               <div>YAY! CV Berhasil didownload!</div>
-              <div className="text-xs sm:text-sm">
-                Silakan lanjut mengerjakan! Semangat!
-              </div>
             </div>
           </FinishPopup>
         )}

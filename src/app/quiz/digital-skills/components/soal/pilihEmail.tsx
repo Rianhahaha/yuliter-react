@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import SoalContainer from "./soalContainer";
 import FinishPopup from "@/app/quiz/digital-skills/components/finishPopUp";
+import { evaluateScore } from "@/utils/evaluate";
+import StartPopup from "../startPopUp";
 
 type EmailItem = {
   sender: string;
@@ -52,13 +54,14 @@ export default function SoalPilihEmail({
 }: {
   onFinish: (score: number, duration: number) => void;
 }) {
-  const timeLimit = 40;
+  const timeLimit = 30;
 
   const [openedIndex, setOpenedIndex] = useState<number | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [timeLeft, setTimeLeft] = useState(timeLimit);
   const [showFinish, setShowFinish] = useState(false);
   const [score, setScore] = useState<number | null>(null);
+  const [showStart, setShowStart] = useState(true);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -70,7 +73,7 @@ export default function SoalPilihEmail({
   const [shuffledEmails, setShuffledEmails] = useState<EmailItem[]>([]);
 
   useEffect(() => {
-    if (showFinish) {
+    if (showFinish || showStart) {
       if (timerRef.current) {
         clearInterval(timerRef.current);
         timerRef.current = null;
@@ -95,18 +98,27 @@ export default function SoalPilihEmail({
         timerRef.current = null;
       }
     };
-  }, [showFinish]);
+  }, [showFinish, showStart]);
+  useEffect(() => {
+    if (timeLeft === 0 && !showFinish) {
+      setScore(
+        evaluateScore({ isCorrect: false, timeUsed: timeLimit, timeLimit })
+      );
+      setShowFinish(true);
+    }
+  }, [timeLeft, showFinish]);
 
   const handleSelect = (index: number) => {
     if (selectedIndex !== null) return;
     setSelectedIndex(index);
-    const timeUsedPercentage = (timeLimit - timeLeft) / timeLimit;
-const computedScore = shuffledEmails[index].isLegit
-  ? 10 - Math.round(10 * timeUsedPercentage)
-  : 5 - Math.round(5 * timeUsedPercentage);
-setScore(computedScore);
-setShowFinish(true);
-
+    const compute = shuffledEmails[index].isLegit;
+    const computedScore = evaluateScore({
+      isCorrect: compute,
+      timeUsed: timeLimit - timeLeft,
+      timeLimit: timeLimit,
+    });
+    setScore(computedScore);
+    setShowFinish(true);
   };
   const handleFinish = () => {
     if (score !== null) {
@@ -114,21 +126,24 @@ setShowFinish(true);
     }
     setShowFinish(false);
   };
+  const soal = `
+      Dari email berikut, mana yang merupakan undangan interview yang ASLI, bukan penipuan?
+      `;
 
   return (
-    <SoalContainer
-      timeLeft={timeLeft}
-      question={`Dari 3 email berikut, mana yang merupakan undangan interview yang ASLI, bukan penipuan?`}
-    >
+    <SoalContainer timeLimit={timeLimit} timeLeft={timeLeft} question={soal}>
+      {showStart && (
+        <StartPopup soal={soal} onClose={() => setShowStart(false)} />
+      )}
       {showFinish && score !== null && (
-        <FinishPopup score={score} onClose={handleFinish}>
+        <FinishPopup
+          score={score}
+          timeLeft={timeLeft}
+          time={timeLimit - timeLeft}
+          onClose={handleFinish}
+        >
           <div className="text-3xl mb-2 w-full text-center space-y-2">
-            <div>
-              {shuffledEmails[selectedIndex!].isLegit
-                ? "Yay! Jawabanmu benar!"
-                : "Lebih teliti lagi yaaaa :D"}
-            </div>
-            <div className="text-sm">Silakan lanjut mengerjakan! Semangat!</div>
+           
           </div>
         </FinishPopup>
       )}

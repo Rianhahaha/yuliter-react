@@ -4,6 +4,8 @@ import React, { useEffect, useState, useRef } from "react";
 import SoalContainer from "./soalContainer";
 import Image from "next/image";
 import FinishPopup from "@/app/quiz/digital-skills/components/finishPopUp";
+import { evaluateScore } from "@/utils/evaluate";
+import StartPopup from "../startPopUp";
 
 export default function AmankanDokumenCloud({
   onFinish,
@@ -19,11 +21,13 @@ export default function AmankanDokumenCloud({
   const [score, setScore] = useState<number | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const [showFinish, setShowFinish] = useState(false);
+    const [showStart, setShowStart] = useState(true);
+  
 
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (showFinish) {
+    if (showFinish || showStart) {
       if (timerRef.current) {
         clearInterval(timerRef.current);
         timerRef.current = null;
@@ -48,16 +52,26 @@ export default function AmankanDokumenCloud({
         timerRef.current = null;
       }
     };
-  }, [showFinish]);
-
+  }, [showFinish, showStart]);
+  useEffect(() => {
+    if (timeLeft === 0 && !showFinish) {
+      setScore(
+        evaluateScore({ isCorrect: false, timeUsed: timeLimit, timeLimit })
+      );
+      setShowFinish(true);
+    }
+  }, [timeLeft, showFinish]);
   const handleSubmit = () => {
     if (submitted) return;
     setSubmitted(true);
 
-    const timeUsedPercentage = (timeLimit - timeLeft) / timeLimit;
-    const computedScore = viewOnly
-      ? 10 - Math.round(10 * timeUsedPercentage)
-      : 5 - Math.round(5 * timeUsedPercentage);
+
+          const compute = viewOnly;
+          const computedScore = evaluateScore({
+            isCorrect: compute,
+            timeUsed: timeLimit - timeLeft,
+            timeLimit: timeLimit,
+          });
     setScore(computedScore);
     setShowFinish(true);
 
@@ -77,14 +91,21 @@ export default function AmankanDokumenCloud({
   const handleOpen = () => {
     setOpen(!open);
   };
-
+  const soal = `
+      Kamu ingin mengirim file lamaran via link cloud (Google Drive / OneDrive). Untuk menghindari disalahgunakan, aktifkan opsi "View Only"!
+      `;
   return (
-    <SoalContainer
-      timeLeft={timeLeft}
-      question={`Kamu ingin mengirim file lamaran via link cloud (Google Drive / OneDrive). Untuk menghindari disalahgunakan, aktifkan opsi "View Only"!`}
-    >
+    <SoalContainer timeLimit={timeLimit} timeLeft={timeLeft} question={soal}>
+      {showStart && (
+        <StartPopup soal={soal} onClose={() => setShowStart(false)} />
+      )}
       {showFinish && score !== null && (
-        <FinishPopup score={score} onClose={handleFinish}>
+        <FinishPopup
+          score={score}
+          timeLeft={timeLeft}
+          time={timeLimit - timeLeft}
+          onClose={handleFinish}
+        >
             <div className="sm:text-2xl md:text-3xl mb-2 w-full text-center space-y-2">
             <div>
               {viewOnly ? "Yay! Dokumenmu dibagikan tanpa akses edit! Kerja bagus!" : "HRD jadi bisa edit dong :( Teliti lagi yaa!"}

@@ -16,6 +16,8 @@ import {
 import SortableItem from "./SortableItem";
 import SoalContainer from "./soalContainer";
 import FinishPopup from "@/app/quiz/digital-skills/components/finishPopUp";
+import { evaluateScore } from "@/utils/evaluate";
+import StartPopup from "../startPopUp";
 const CORRECT_ORDER = [
   "Yth. Ibu Rina,",
 
@@ -42,6 +44,7 @@ export default function KirimJawabanEmailHRD({
   const [score, setScore] = useState<number | null>(null);
   const [hasInteracted, setHasInteracted] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
+  const [showStart, setShowStart] = useState(true);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -51,7 +54,7 @@ const shuffled = [...CORRECT_ORDER].sort(() => Math.random() - 0.5);
   }, []);
 
   useEffect(() => {
-    if (showFinish) {
+    if (showFinish || showStart) {
       if (timerRef.current) {
         clearInterval(timerRef.current);
         timerRef.current = null;
@@ -76,7 +79,7 @@ const shuffled = [...CORRECT_ORDER].sort(() => Math.random() - 0.5);
         timerRef.current = null;
       }
     };
-  }, [showFinish]);
+  }, [showFinish, showStart]);
 
   const sensors = useSensors(useSensor(PointerSensor));
 
@@ -93,12 +96,11 @@ const shuffled = [...CORRECT_ORDER].sort(() => Math.random() - 0.5);
 const handleSubmit = () => {
   const isCorrect = items.every((item, i) => item === CORRECT_ORDER[i]);
 
-  const timeUsedPercentage = (timeLimit - timeLeft) / timeLimit;
-  let computedScore = isCorrect
-    ? 10 - Math.round(10 * timeUsedPercentage)
-    : 5 - Math.round(5 * timeUsedPercentage);
-
-  computedScore = Math.max(0, computedScore); // mencegah nilai minus
+    const computedScore = evaluateScore({
+      isCorrect: isCorrect,
+      timeUsed: timeLimit - timeLeft,
+      timeLimit: timeLimit,
+    });
   setIsCorrect(isCorrect); // simpan benar atau salah
   setScore(computedScore);
   setShowFinish(true);
@@ -110,11 +112,16 @@ const handleSubmit = () => {
     setShowFinish(false);
   };
 
+  const soal = `
+      Susun potongan kalimat untuk membalas email HRD dengan profesional :
+      
+      `;
+
   return (
-    <SoalContainer
-      timeLeft={timeLeft}
-      question="Susun potongan kalimat untuk membalas email HRD dengan profesional:"
-    >
+    <SoalContainer timeLimit={timeLimit} timeLeft={timeLeft} question={soal}>
+      {showStart && (
+        <StartPopup soal={soal} onClose={() => setShowStart(false)} />
+      )}
       <div className="p-5 max-w-2xl overflow-y-auto h-full">
         <div className="space-y-1 text-xs  border border-gray-200 p-2 rounded-2xl">
           <DndContext
@@ -142,14 +149,18 @@ const handleSubmit = () => {
         </div>
       </div>
       {showFinish && score !== null && (
-        <FinishPopup score={score} onClose={handleFinish}>
+        <FinishPopup
+          score={score}
+          timeLeft={timeLeft}
+          time={timeLimit - timeLeft}
+          onClose={handleFinish}
+        >
           <div className="text-3xl mb-2 w-full text-center space-y-2">
             <div>
               {isCorrect
                 ? "Yay! Jawabanmu benar!"
                 : "Lebih teliti lagi yaaaa :D"}
             </div>
-            <div className="text-sm">Silakan lanjut mengerjakan! Semangat!</div>
           </div>
         </FinishPopup>
       )}

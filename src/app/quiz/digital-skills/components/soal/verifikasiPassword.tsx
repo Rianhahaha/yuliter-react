@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import SoalContainer from "./soalContainer";
 import FinishPopup from "@/app/quiz/digital-skills/components/finishPopUp";
 import { useUser } from "@/context/UserContext";
+import { evaluateScore } from "@/utils/evaluate";
+import StartPopup from "../startPopUp";
+
 
 export default function VerifikasiPassword({
   onFinish,
@@ -15,10 +18,20 @@ export default function VerifikasiPassword({
   const [showFinish, setShowFinish] = useState(false);
   const [score, setScore] = useState(0);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+      const [showStart, setShowStart] = useState(true);
+
 
   const original = localStorage.getItem("saved_password") || "";
 
   useEffect(() => {
+    if (showFinish || showStart) {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+      return;
+    }
+
     timerRef.current = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
@@ -36,28 +49,41 @@ export default function VerifikasiPassword({
         timerRef.current = null;
       }
     };
-  }, []);
+  }, [showFinish, showStart]);
+  useEffect(() => {
+    if (timeLeft === 0 && !showFinish) {
+      setScore(
+        evaluateScore({ isCorrect: false, timeUsed: timeLimit, timeLimit })
+      );
+      setShowFinish(true);
+    }
+  }, [timeLeft, showFinish]);
 
   const handleSubmit = () => {
-    const timeUsedPercentage = (timeLimit - timeLeft) / timeLimit;
-
-    const computedScore = score
-      ? 10 - Math.round(10 * timeUsedPercentage)
-      : 5 - Math.round(5 * timeUsedPercentage);
-
+    const computedScore = evaluateScore({
+      isCorrect: score,
+      timeUsed: timeLimit - timeLeft,
+      timeLimit: timeLimit,
+    });
     setScore(computedScore);
+
     setShowFinish(true);
   };
 
   const handleFinish = () => {
-    onFinish(score, timeLimit - timeLeft);
+    if (score !== null) {
+      onFinish(score, timeLimit - timeLeft);
+    }
+    setShowFinish(false);
   };
-
+  const soal = `
+     Kamu tiba-tiba ter-logout dari aplikasi pencarian kerja, Apa passwordmu tadi?
+      `;
   return (
-    <SoalContainer
-      timeLeft={timeLeft}
-      question="Kamu tiba-tiba ter-logout dari aplikasi pencarian kerja, Apa passwordmu tadi?"
-    >
+    <SoalContainer timeLimit={timeLimit} timeLeft={timeLeft} question={soal}>
+      {showStart && (
+        <StartPopup soal={soal} onClose={() => setShowStart(false)} />
+      )}
       <div className="w-full h-full  p-6 rounded-2xl max-w-lg overflow-y-auto">
         <h2 className="text-xl font-semibold mb-4">
           Daftar Portal Lowongan Kerja
@@ -113,11 +139,16 @@ export default function VerifikasiPassword({
       </div>
 
       {showFinish && (
-        <FinishPopup score={score} onClose={handleFinish}>
+        <FinishPopup
+          score={score}
+          timeLeft={timeLeft}
+          time={timeLimit - timeLeft}
+          onClose={handleFinish}
+        >
           {input === original ? (
-            <div className="text-center">Password cocok! 👍</div>
+            <div className="w-full text-center">Password cocok! 👍</div>
           ) : (
-            <div className="text-center">
+            <div className="w-full text-center">
               Password tidak cocok 😢 <br />
               Harus lebih teliti!
             </div>

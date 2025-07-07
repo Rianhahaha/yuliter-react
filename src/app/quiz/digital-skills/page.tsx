@@ -83,7 +83,7 @@ export default function QuizPage() {
                     />
                   </div>
                   <div className=" p-1 sm:p-5 ">
-                    <div className="main-button relative !text-[2rem] mb-5">
+                    <div className="main-button relative !text-[2rem] mb-5 !cursor-default">
                       TIPS
                       <Image
                         src="/tips.svg"
@@ -95,8 +95,8 @@ export default function QuizPage() {
                     </div>
                     <div className="flex flex-col gap-2 sm:gap-5 text-xl">
                       <div className="">
-                        📌 <span className="font-black underline">Baca</span>{" "}
-                        instruksi dengan teliti
+                        📌 <span className="font-black">Baca</span>{" "}
+                        instruksi soal dengan teliti
                       </div>
                       <div className="">
                         ⏱️ Semakin cepat, semakin tinggi skor{" "}

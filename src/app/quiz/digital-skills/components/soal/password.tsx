@@ -1,21 +1,25 @@
 import React, { useState, useEffect, useRef } from "react";
 import SoalContainer from "./soalContainer";
 import FinishPopup from "@/app/quiz/digital-skills/components/finishPopUp";
+import StartPopup from "../startPopUp";
 import { useUser } from "@/context/UserContext";
+import { evaluateScore } from "@/utils/evaluate";
 
 export default function PasswordStrength({
   onFinish,
 }: {
   onFinish: (score: number, duration: number) => void;
 }) {
-    const user = useUser();
-  
+  const user = useUser();
+
   const timeLimit = 30;
   const [timeLeft, setTimeLeft] = useState(timeLimit);
   const [password, setPassword] = useState("");
   const [score, setScore] = useState(1);
   const [submitted, setSubmitted] = useState(false);
   const [showFinish, setShowFinish] = useState(false);
+  const [showStart, setShowStart] = useState(true);
+
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const evaluatePassword = (password: string): number => {
@@ -24,12 +28,12 @@ export default function PasswordStrength({
     if (/[A-Z]/.test(password)) s++;
     if (/[0-9]/.test(password)) s++;
     if (/[^A-Za-z0-9]/.test(password)) s++;
-    s = s*2;
+    s = s * 2;
 
     return s;
   };
   useEffect(() => {
-    if (showFinish) {
+    if (showFinish || showStart) {
       if (timerRef.current) {
         clearInterval(timerRef.current);
         timerRef.current = null;
@@ -54,7 +58,15 @@ export default function PasswordStrength({
         timerRef.current = null;
       }
     };
-  }, [showFinish]);
+  }, [showFinish, showStart]);
+  useEffect(() => {
+    if (timeLeft === 0 && !showFinish) {
+      setScore(
+        evaluateScore({ isCorrect: false, timeUsed: timeLimit, timeLimit })
+      );
+      setShowFinish(true);
+    }
+  }, [timeLeft, showFinish]);
 
   const getFeedback = (score: number): { message: string; color: string } => {
     if (score <= 4) return { message: "Password lemah", color: "text-red-500" };
@@ -70,13 +82,12 @@ export default function PasswordStrength({
   };
 
   const handleSubmit = () => {
- const timeUsedPercentage = (timeLimit - timeLeft) / timeLimit;
+    const timeUsedPercentage = (timeLimit - timeLeft) / timeLimit;
 
-const computedScore = score - Math.round(10 * timeUsedPercentage)
+    const computedScore = score - Math.round(10 * timeUsedPercentage);
 
-
-setScore(computedScore);
-setShowFinish(true);
+    setScore(computedScore);
+    setShowFinish(true);
     setSubmitted(true);
     setShowFinish(true);
   };
@@ -85,26 +96,25 @@ setShowFinish(true);
     localStorage.setItem("saved_password", password); // ⬅️ simpan password
     onFinish(score, timeLimit - timeLeft);
   };
-
-  return (
-    <>
-      <SoalContainer
-        timeLeft={timeLeft}
-        question={`
+  const soal = `
           Kamu sedang mengunjungi portal lowongan kerja dan disuruh untuk membuat password untuk akun kamu.
           Password harus memiliki minimal 8 karakter, terdiri dari huruf besar, huruf kecil, angka dan karakter khusus.
-          `}
-      >
-        <div className="w-full h-full  p-6 rounded-2xl max-w-lg overflow-y-auto">
+          `;
+  return (
+    <>
+      <SoalContainer timeLimit={timeLimit} timeLeft={timeLeft} question={soal}>
+        {showStart && (
+          <StartPopup soal={soal} onClose={() => setShowStart(false)} />
+        )}        <div className="w-full h-full  p-6 rounded-2xl max-w-lg overflow-y-auto">
           <h2 className="text-xl font-semibold mb-4">
             Daftar Portal Lowongan Kerja
           </h2>
           <p className="mb-4">
             Selamat Datang di Portal Lowongan Kerja, silakan mendaftar akun
             untuk melanjutkan.
-                    <div className="text-red-500 font-black">
-          catatan : JANGAN PERNAH MASUKKAN PASSWORDMU YANG ASLI
-        </div>
+            <div className="text-red-500 font-black">
+              catatan : JANGAN PERNAH MASUKKAN PASSWORDMU YANG ASLI
+            </div>
           </p>
 
           {!submitted ? (
@@ -169,7 +179,12 @@ setShowFinish(true);
           )}
         </div>
         {showFinish && (
-          <FinishPopup score={score} onClose={handleFinish}>
+          <FinishPopup
+            score={score}
+            timeLeft={timeLeft}
+            time={timeLimit - timeLeft}
+            onClose={handleFinish}
+          >
             <div className="sm:text-2xl md:text-3xl mb-2 w-full text-center space-y-2">
               <div>
                 {score <= 4
@@ -177,9 +192,6 @@ setShowFinish(true);
                   : score === 8
                   ? "Lumayan~ tapi masih kurang kuat nih passwordmu! :)"
                   : "Bagus! Passwordmu sangat kuat! :D"}
-              </div>
-              <div className="text-xs sm:text-sm">
-                Silakan lanjut mengerjakan! Semangat!
               </div>
             </div>
           </FinishPopup>

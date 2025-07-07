@@ -2,6 +2,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import SoalContainer from "./soalContainer";
 import FinishPopup from "@/app/quiz/digital-skills/components/finishPopUp";
+import { evaluateScore } from "@/utils/evaluate";
+import StartPopup from "../startPopUp";
 
 const studyCases = [
   {
@@ -141,9 +143,11 @@ export default function SoalFilterLowongan({
   const [filteredJobs, setFilteredJobs] = useState(jobList);
   const [submitted, setSubmitted] = useState(false);
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
+      const [showStart, setShowStart] = useState(true);
+  
 
   useEffect(() => {
-    if (showFinish) {
+    if (showFinish || showStart) {
       if (timerRef.current) {
         clearInterval(timerRef.current);
         timerRef.current = null;
@@ -168,7 +172,15 @@ export default function SoalFilterLowongan({
         timerRef.current = null;
       }
     };
-  }, [showFinish]);
+  }, [showFinish, showStart]);
+    useEffect(() => {
+      if (timeLeft === 0 && !showFinish) {
+        setScore(
+          evaluateScore({ isCorrect: false, timeUsed: timeLimit, timeLimit })
+        );
+        setShowFinish(true);
+      }
+    }, [timeLeft, showFinish]);
 
   useEffect(() => {
     const randomCase =
@@ -207,18 +219,25 @@ export default function SoalFilterLowongan({
     }
     setShowFinish(false);
   };
+  
 
   return (
-    <SoalContainer timeLeft={timeLeft} question={selectedCase.caseText}>
-      {showFinish && score !== null && (
-        <FinishPopup score={score} onClose={handleFinish}>
+      <SoalContainer timeLimit={timeLimit} timeLeft={timeLeft} question={selectedCase.caseText}>
+        {showStart && (
+          <StartPopup soal={selectedCase.caseText} onClose={() => setShowStart(false)} />
+        )}      {showFinish && score !== null && (
+          <FinishPopup
+            score={score}
+            timeLeft={timeLeft}
+            time={timeLimit - timeLeft}
+            onClose={handleFinish}
+          >
           <div className="text-3xl mb-2 w-full text-center space-y-2">
             <div>
               {isCorrectAnswer 
                 ? "Yay! Jawabanmu benar!"
                 : "Lebih teliti lagi yaaaa :D"}
             </div>
-            <div className="text-sm">Silakan lanjut mengerjakan! Semangat!</div>
           </div>
         </FinishPopup>
       )}

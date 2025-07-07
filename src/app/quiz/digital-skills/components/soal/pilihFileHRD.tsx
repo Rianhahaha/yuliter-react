@@ -3,6 +3,8 @@ import SoalContainer from "./soalContainer";
 import { useUser } from "@/context/UserContext";
 import Image from "next/image";
 import FinishPopup from "@/app/quiz/digital-skills/components/finishPopUp";
+import { evaluateScore } from "@/utils/evaluate";
+import StartPopup from "../startPopUp";
 
 export default function PilihFileHRD({
   onFinish,
@@ -17,6 +19,7 @@ export default function PilihFileHRD({
   const [showFinish, setShowFinish] = useState(false);
   const [score, setScore] = useState<number | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const [showStart, setShowStart] = useState(true);
 
   const files = useMemo(() => {
     if (!user) return [];
@@ -51,7 +54,7 @@ export default function PilihFileHRD({
   }, [user]);
 
   useEffect(() => {
-    if (showFinish) {
+    if (showFinish || showStart) {
       if (timerRef.current) {
         clearInterval(timerRef.current);
         timerRef.current = null;
@@ -76,18 +79,26 @@ export default function PilihFileHRD({
         timerRef.current = null;
       }
     };
-  }, [showFinish]);
+  }, [showFinish, showStart]);
+  useEffect(() => {
+    if (timeLeft === 0 && !showFinish) {
+      setScore(
+        evaluateScore({ isCorrect: false, timeUsed: timeLimit, timeLimit })
+      );
+      setShowFinish(true);
+    }
+  }, [timeLeft, showFinish]);
 
   const handleSelect = (index: number) => {
     if (selectedIndex !== null) return;
-
     setSelectedIndex(index);
-    const timeUsedPercentage = (timeLimit - timeLeft) / timeLimit;
 
-    const computedScore = files[index].isTrue
-      ? 10 - Math.round(10 * timeUsedPercentage)
-      : 5 - Math.round(5 * timeUsedPercentage);
-
+    const compute = files[index].isTrue;
+    const computedScore = evaluateScore({
+      isCorrect: compute,
+      timeUsed: timeLimit - timeLeft,
+      timeLimit: timeLimit,
+    });
     setScore(computedScore);
     setShowFinish(true);
   };
@@ -98,21 +109,27 @@ export default function PilihFileHRD({
     }
     setShowFinish(false);
   };
-
+  const soal = `
+      Manakah File CV yang pantas untuk dikirimkan ke HRD?
+      `;
   return (
-    <SoalContainer
-      timeLeft={timeLeft}
-      question={`Manakah File yang pantas untuk dikirimkan ke HRD?`}
-    >
+    <SoalContainer timeLimit={timeLimit} timeLeft={timeLeft} question={soal}>
+      {showStart && (
+        <StartPopup soal={soal} onClose={() => setShowStart(false)} />
+      )}
       {showFinish && score !== null && (
-        <FinishPopup score={score} onClose={handleFinish}>
+        <FinishPopup
+          score={score}
+          timeLeft={timeLeft}
+          time={timeLimit - timeLeft}
+          onClose={handleFinish}
+        >
           <div className="text-3xl mb-2 w-full text-center space-y-2">
             <div>
               {files[selectedIndex!]?.isTrue
                 ? "Yay! Jawabanmu benar!"
                 : "Lebih teliti lagi yaaaa :D"}
             </div>
-            <div className="text-sm">Silakan lanjut mengerjakan! Semangat!</div>
           </div>
         </FinishPopup>
       )}
