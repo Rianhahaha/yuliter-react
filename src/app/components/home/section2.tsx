@@ -29,7 +29,7 @@ export default function Section2() {
             </div>
           </div>
           <div className="w-full flex justify-center md:justify-end">
-            <LinkButton link="/dashboard" text="Coba Sekarang!" />
+            <LinkButton link="#hero" text="Coba Sekarang!" />
           </div>
         </div>
       </section>
@@ -53,7 +53,7 @@ export default function Section2() {
             </div>
           </div>
           <div className="w-full flex justify-center md:justify-end">
-            <LinkButton link="/dashboard" text="Coba Sekarang!" />
+            <LinkButton link="#hero" text="Coba Sekarang!" />
           </div>
         </div>
       </section>

@@ -53,6 +53,9 @@
     }
   }
 }
+* {
+  scroll:smooth;
+}
 .hovered {
   @apply transition-all duration-200 ease-in-out;
 }
