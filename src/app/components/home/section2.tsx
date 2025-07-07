@@ -4,40 +4,59 @@ import LinkButton from "./buttons/link-button";
 export default function Section2() {
   return (
     <>
-    <div
-      className="h-screen flex justify-center items-center bg-background2 rounded-t-[5rem] p-[6rem]"
-      id="section2"
+      <section
+        className="gap-5 h-screen flex flex-col md:flex-row justify-center items-center  rounded-t-[5rem] p-5 md:p-[6rem]"
+        id="section2"
       >
-      <div className="w-1/2 flex justify-center">
-        <Image src={"/file.svg"} alt="" height={500} width={500} />
-      </div>
-      <div className="w-1/2 flex flex-col items-start gap-5">
-        <div className="mx-[-1rem] w-full">
-          <div className="text-[4rem] font-main">yuk bergabung!</div>
-          <div className="text-[1rem] font-secondary text-justify">
-            Bergabunglah bersama kami di Yu Liter untuk mengasah kemampuan
-            digital kamu. Dengan cara yang menyenangkan, kamu akan belajar cara
-            mengenali informasi yang dapat dipercaya, memahami teknologi, dan
-            tetap aman saat berinteraksi di dunia maya.
+        <div className="w-full md:w-1/2 flex justify-center">
+          <Image
+            src={"/dashboard/dashboardMain.svg"}
+            alt=""
+            height={500}
+            width={500}
+          />
+        </div>
+        <div className="w-full md:w-1/2 flex flex-col items-start gap-5">
+          <div className=" w-full">
+            <div className="text-center md:text-left text-[2rem] lg:text-[4rem] font-main">
+              yuk bergabung!
+            </div>
+            <div className="text-[0.7rem] md:text-[1rem] font-main tracking-widest text-justify">
+              Bergabunglah bersama kami di Yu Liter untuk mengasah kemampuan
+              digital kamu. Dengan cara yang menyenangkan, kamu akan belajar
+              cara mengenali informasi yang dapat dipercaya, memahami teknologi,
+              dan tetap aman saat berinteraksi di dunia maya.
+            </div>
+          </div>
+          <div className="w-full flex justify-center md:justify-end">
+            <LinkButton link="/dashboard" text="Coba Sekarang!" />
           </div>
         </div>
-        <div className="w-full flex justify-end">
-
-        <LinkButton link="/dashboard" text="Coba Sekarang!" />
+      </section>
+      <section
+        className="gap-5 h-screen flex  flex-col md:flex-row-reverse justify-center items-center  rounded-t-[5rem] p-5 md:p-[6rem]"
+        id="section3"
+      >
+        <div className="w-full md:w-1/2 flex justify-center">
+          <Image src={"/section3.png"} alt="" height={500} width={500} />
         </div>
-      </div>
-    </div>
-    <div
-      className="h-full flex justify-center items-center bg-background2 rounded-t-[5rem] p-[6rem] border">
-        <div className="w-[10rem] text-center bg-amber-200 text-black border-2 p-5 box-border">
-          <div>
-
-          adsa
-          <a href="http://www.onlinewebfonts.com">Web Fonts</a>
+        <div className="w-full md:w-1/2 flex flex-col items-start gap-5">
+          <div className=" w-full">
+            <div className="text-center md:text-left text-[2rem] lg:text-[4rem] font-main">
+              Siap Hadapi Dunia Kerja Digital?
+            </div>
+            <div className="text-[0.7rem] md:text-[1rem] font-main tracking-widest text-justify">
+              Dunia kerja makin digital — apakah kamu sudah siap?{" "}
+              <strong>Yu Liter</strong> bantu kamu mengenali lowongan asli,
+              menghindari penipuan online, menyusun email profesional, dan
+              banyak lagi. Semua lewat kuis interaktif yang bikin nagih!
+            </div>
+          </div>
+          <div className="w-full flex justify-center md:justify-end">
+            <LinkButton link="/dashboard" text="Coba Sekarang!" />
           </div>
         </div>
-     
-    </div>
-      </>
+      </section>
+    </>
   );
 }

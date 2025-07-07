@@ -48,7 +48,7 @@ export default function QuizResult({
             </div>
             <div className="grid grid-cols-2 lg:grid-cols-1 gap-5 ">
               <div className="flex flex-col items-center justify-center w-[8rem] md:w-[15rem] lg:w-[20rem] gap-2">
-                <div className=" grid-cols-2 grid items-center text-[5rem] md:text-[6rem] lg:text-[8rem] gap-1 ">
+                <div className=" grid-cols-2 grid items-center text-[3rem] md:text-[6rem] lg:text-[8rem] gap-1 ">
                   <Image
                     className="w-[5rem] md:w-[7rem] lg:w-[10rem] animate-finish"
                     src="/star.svg"
@@ -60,7 +60,7 @@ export default function QuizResult({
                 </div>
               </div>
               <div className="flex flex-col items-center justify-center w-[8rem] md:w-[15rem] lg:w-[20rem] gap-2">
-                <div className=" grid-cols-2 grid items-center text-[5rem] md:text-[6rem] lg:text-[8rem] gap-1 ">
+                <div className=" grid-cols-2 grid items-center text-[3rem] md:text-[6rem] lg:text-[8rem] gap-1 ">
                   <Image
                     className="w-[5rem] md:w-[7rem] lg:w-[10rem] animate-finish"
                     src="/time.svg"
@@ -70,7 +70,7 @@ export default function QuizResult({
                   />
                   <div className="leading-[4rem] relative">
                     {time}
-                    <div className="absolute main-button !p-3 -rotate-12 text-[1.5rem] -right-5 -bottom-10">
+                    <div className="absolute main-button !p-2 sm:!p-3 -rotate-12 !text-[1rem] sm:!text-[1.5rem] -right-9 sm:-right-5 -bottom-3 sm:-bottom-10 pointer-events-none">
                       detik
                     </div>
                   </div>

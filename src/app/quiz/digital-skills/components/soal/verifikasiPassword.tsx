@@ -146,11 +146,11 @@ export default function VerifikasiPassword({
           onClose={handleFinish}
         >
           {input === original ? (
-            <div className="w-full text-center">Password cocok! 👍</div>
+            <div className="w-full text-center text-4xl">Password cocok!  <br />👍</div>
           ) : (
-            <div className="w-full text-center">
-              Password tidak cocok 😢 <br />
-              Harus lebih teliti!
+            <div className="w-full text-center text-4xl">
+              Password tidak cocok <br /> 😢
+               <br />Harus lebih teliti!
             </div>
           )}
         </FinishPopup>

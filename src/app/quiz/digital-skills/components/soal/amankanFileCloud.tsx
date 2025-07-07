@@ -110,10 +110,6 @@ export default function AmankanDokumenCloud({
             <div>
               {viewOnly ? "Yay! Dokumenmu dibagikan tanpa akses edit! Kerja bagus!" : "HRD jadi bisa edit dong :( Teliti lagi yaa!"}
               </div>
-              <div className="text-xs sm:text-sm">
-              Silakan lanjut mengerjakan! Semangat!</div>
-            {/* <div className="text-sm">Lama Pengerjaan</div>
-            <div className="text-sm">{timeLimit - timeLeft} detik</div> */}
           </div>
         </FinishPopup>
       )}

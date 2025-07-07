@@ -64,7 +64,7 @@
 }
 
 .main-button {
-  @apply w-fit px-10 py-3 rounded-full bg-gradient-to-bl from-mainPink to-mainPurple text-white font-main transition-all duration-200 ease-in-out border-t-2 text-lg border-white shadow-[inset_0px_-4px_0px_3px_#00000030] hover:shadow-[inset_0px_0px_0px_0px_#00000030] hover:translate-y-1 cursor-pointer tracking-widest;
+  @apply w-fit py-2 px-5 md:px-10 md:py-3 rounded-full bg-gradient-to-bl from-mainPink to-mainPurple text-white font-main transition-all duration-200 ease-in-out border-t-2 text-sm md:text-lg border-white shadow-[inset_0px_-4px_0px_3px_#00000030] hover:shadow-[inset_0px_0px_0px_0px_#00000030] hover:translate-y-1 cursor-pointer tracking-widest;
 }
 .yellow-button {
   @apply w-fit px-10 py-3 rounded-full bg-gradient-to-bl from-mainPink to-mainPurple text-white font-main transition-all duration-200 ease-in-out border-t-2 text-lg border-white shadow-[inset_0px_-4px_0px_3px_#00000030] hover:shadow-[inset_0px_0px_0px_0px_#00000030] hover:translate-y-1 cursor-pointer tracking-widest;
@@ -73,10 +73,10 @@
   @apply w-fit px-10 py-3 rounded-full bg-gradient-to-bl from-yellow-400 to-amber-500 text-white font-main transition-all duration-200 ease-in-out border-t-2 text-lg border-white shadow-[inset_0px_-4px_0px_3px_#00000030] hover:shadow-[inset_0px_0px_0px_0px_#00000030] hover:translate-y-1 cursor-pointer tracking-widest;
 }
 .success-button {
-  @apply w-fit px-10 py-3 rounded-full bg-gradient-to-bl from-emerald-400 to-green-500 text-white font-main transition-all duration-200 ease-in-out border-t-2 text-lg border-white shadow-[inset_0px_-4px_0px_3px_#00000030] hover:shadow-[inset_0px_0px_0px_0px_#00000030] hover:translate-y-1 cursor-pointer tracking-widest;
+  @apply w-fit py-2 px-5 md:px-10 md:py-3  rounded-full bg-gradient-to-bl from-emerald-400 to-green-500 text-white font-main transition-all duration-200 ease-in-out border-t-2 text-lg border-white shadow-[inset_0px_-4px_0px_3px_#00000030] hover:shadow-[inset_0px_0px_0px_0px_#00000030] hover:translate-y-1 cursor-pointer tracking-widest;
 }
 .danger-button {
-  @apply cursor-pointer w-fit px-10 py-3 rounded-full bg-gradient-to-bl from-pink-800 to-red-500 text-white font-main transition-all duration-200 ease-in-out border-t-2 text-lg border-white shadow-[inset_0px_-4px_0px_3px_#00000030] hover:shadow-[inset_0px_0px_0px_0px_#00000030] hover:translate-y-1 tracking-widest;
+  @apply cursor-pointer w-fit py-2 px-5 md:px-10 md:py-3 rounded-full bg-gradient-to-bl from-pink-800 to-red-500 text-white font-main transition-all duration-200 ease-in-out border-t-2 text-sm md:text-lg border-white shadow-[inset_0px_-4px_0px_3px_#00000030] hover:shadow-[inset_0px_0px_0px_0px_#00000030] hover:translate-y-1 tracking-widest;
 }
 .google-button {
   background:linear-gradient(-120deg, #4285f4, #34a853, #fbbc05, #ea4335);

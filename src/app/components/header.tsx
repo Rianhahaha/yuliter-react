@@ -27,20 +27,20 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-transparent fixed w-full px-[6rem] py-[1rem] flex justify-between items-center">
+    <nav className="bg-transparent fixed w-full px-3 md:px-[6rem] py-[1rem] flex justify-between items-center">
       <Link href="#">
         <Logo/>
       </Link>
 
       {user ? (
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2 md:space-x-4">
           <LinkButton link="/dashboard" text="Dashboard" />    
           <button className="danger-button"  onClick={handleLogout}>
             Logout
             </button>      
         </div>
       ) : (
-        <LinkButton link="/login" text="Masuk" />
+        <Link href="/login" className="main-button" > Masuk </Link>
       )}
     </nav>
   );

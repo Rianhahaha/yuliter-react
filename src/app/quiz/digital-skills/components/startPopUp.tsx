@@ -17,7 +17,7 @@ export default function StartPopup({ soal, onClose }: FinishPopupProps) {
                 Instruksi
             </div>
           </div>
-          <div className="text-xs sm:text-2xl w-full text-center justify-center flex items-center h-full">
+          <div className="text-xs font-text font-semibold sm:text-2xl w-full text-center justify-center flex items-center h-full">
             {soal}
           </div>
           <button className="w-full main-button" onClick={onClose}>

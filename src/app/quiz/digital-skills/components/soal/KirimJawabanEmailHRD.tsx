@@ -82,6 +82,22 @@ export default function KirimJawabanEmailHRD({
       }
     };
   }, [showFinish, showStart]);
+    useEffect(() => {
+      if (timeLeft === 0 && !showFinish) {
+        setScore(
+          evaluateScore({ isCorrect: false, timeUsed: timeLimit, timeLimit })
+        );
+        setShowFinish(true);
+      }
+    }, [timeLeft, showFinish]);
+      useEffect(() => {
+        if (timeLeft === 0 && !showFinish) {
+          setScore(
+            evaluateScore({ isCorrect: false, timeUsed: timeLimit, timeLimit })
+          );
+          setShowFinish(true);
+        }
+      }, [timeLeft, showFinish]);
 
   const sensors = useSensors(useSensor(PointerSensor));
 
@@ -115,7 +131,7 @@ export default function KirimJawabanEmailHRD({
   };
 
   const soal = `
-      Susun potongan kalimat untuk membalas email HRD dengan profesional :
+      Susun potongan kalimat untuk membalas email HRD dengan profesional. Geser (drag & drop) kalimat sesuai dengan urutan yang benar
       
       `;
 
@@ -125,7 +141,7 @@ export default function KirimJawabanEmailHRD({
         <StartPopup soal={soal} onClose={() => setShowStart(false)} />
       )}
       <div className="p-5 max-w-2xl overflow-y-auto h-full">
-        <div className="w-full text-center">
+        <div className="w-full text-center font-bold text-xl sm:text-3xl">
           Geser (drag & drop) kalimat sesuai dengan urutan yang benar
         </div>
         <div className="space-y-1 text-xs  border border-gray-200 p-2 rounded-2xl">

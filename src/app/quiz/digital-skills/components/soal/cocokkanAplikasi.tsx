@@ -35,7 +35,7 @@ const fullApps: AppItem[] = [
   { id: "zoom", name: "Zoom", icon: "/cocokAplikasi/zoom.svg" },
   { id: "notion", name: "Notion", icon: "/cocokAplikasi/notion.svg" },
   { id: "googlemeet", name: "Google Meet", icon: "/cocokAplikasi/meet.svg" },
-  { id: "asana", name: "Asana", icon: "/cocokAplikasi/asana.svg" },
+  { id: "asana", name: "Asana", icon: "/cocokAplikasi/asana.png" },
   { id: "teams", name: "Microsoft Teams", icon: "/cocokAplikasi/teams.svg" },
   { id: "gmail", name: "Gmail", icon: "/cocokAplikasi/gmail.svg" },
   { id: "figma", name: "Figma", icon: "/cocokAplikasi/figma.svg" },
