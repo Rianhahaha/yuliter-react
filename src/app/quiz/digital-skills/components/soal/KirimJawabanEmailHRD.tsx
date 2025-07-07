@@ -125,6 +125,9 @@ export default function KirimJawabanEmailHRD({
         <StartPopup soal={soal} onClose={() => setShowStart(false)} />
       )}
       <div className="p-5 max-w-2xl overflow-y-auto h-full">
+        <div className="w-full text-center">
+          Geser (drag & drop) kalimat sesuai dengan urutan yang benar
+        </div>
         <div className="space-y-1 text-xs  border border-gray-200 p-2 rounded-2xl">
           <DndContext
             sensors={sensors}
