@@ -2,8 +2,9 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '@/utils/supabaseClient';
+import LogRocket from "logrocket";
 
-type User = {
+export type User = {
   id: string;
   email: string;
   username?: string;
@@ -54,6 +55,13 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
       subscription.unsubscribe();
     };
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      LogRocket.init("bteywj/yuliter");
+      LogRocket.identify(user.id, user);
+    }
+  }, [user]);
 
   return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
 }

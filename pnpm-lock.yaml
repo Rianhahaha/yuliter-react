@@ -26,6 +26,12 @@ importers:
       '@supabase/supabase-js':
         specifier: ^2.49.2
         version: 2.49.2
+      logrocket:
+        specifier: ^10.1.0
+        version: 10.1.0
+      logrocket-react:
+        specifier: ^5.0.1
+        version: 5.0.1(logrocket@10.1.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       next:
         specifier: 15.2.1
         version: 15.2.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -48,6 +54,9 @@ importers:
       '@tailwindcss/postcss':
         specifier: ^4
         version: 4.0.12
+      '@types/logrocket-react':
+        specifier: ^3.0.3
+        version: 3.0.3
       '@types/node':
         specifier: ^20
         version: 20.17.24
@@ -463,6 +472,9 @@ packages:
 
   '@types/json5@0.0.29':
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
+
+  '@types/logrocket-react@3.0.3':
+    resolution: {integrity: sha512-fGpJV4ccwfWAL0293EQx5HrS4PGMvXBpTQOXpA/SLXSCm7fC2O19w7Y3CcgWDmyawQnqbzd8faKAL12VhPdZKA==}
 
   '@types/node@20.17.24':
     resolution: {integrity: sha512-d7fGCyB96w9BnWQrOsJtpyiSaBcAYYr75bnK6ZRjDbql2cGLj/3GsL5OYmLPNq76l7Gf2q4Rv9J2o6h5CrD9sA==}
@@ -1258,6 +1270,19 @@ packages:
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
 
+  logrocket-react@5.0.1:
+    resolution: {integrity: sha512-d5RAi1giur9Yv7/lDK/c2S1hviopN5K1XMMpfpSFRDG3Rr/j5RmGuvNHdXNTJUwGuxTVrpnKUOB43ceQMJfO1Q==}
+    peerDependencies:
+      logrocket: '>=2.0'
+      react: '>=17.0'
+      react-dom: '>=17.0'
+
+  logrocket@1.0.1:
+    resolution: {integrity: sha512-oPA0c5GzMKsWp/6p19OaujZQMzttluqVOI+989uHeciPAljPZvGEpZRbNO3Rr+jC/8jVLJdlMP9IHuyhKsASGA==}
+
+  logrocket@10.1.0:
+    resolution: {integrity: sha512-wcVb+fkM7V6+nhUkhpTdnY/b31C5xy0hlEEs8UOMZiHFUrv0/2kIV+NjtmOlksniIQmUawC5ozw6ZID4qbJmUg==}
+
   loose-envify@1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
     hasBin: true
@@ -2052,6 +2077,10 @@ snapshots:
   '@types/json-schema@7.0.15': {}
 
   '@types/json5@0.0.29': {}
+
+  '@types/logrocket-react@3.0.3':
+    dependencies:
+      logrocket: 1.0.1
 
   '@types/node@20.17.24':
     dependencies:
@@ -3049,6 +3078,16 @@ snapshots:
 
   lodash.merge@4.6.2: {}
 
+  logrocket-react@5.0.1(logrocket@10.1.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+    dependencies:
+      logrocket: 10.1.0
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+
+  logrocket@1.0.1: {}
+
+  logrocket@10.1.0: {}
+
   loose-envify@1.4.0:
     dependencies:
       js-tokens: 4.0.0
@@ -3590,10 +3629,13 @@ snapshots:
   'yuliter@file:':
     dependencies:
       '@dnd-kit/core': 6.3.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@dnd-kit/modifiers': 9.0.0(@dnd-kit/core@6.3.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
       '@dnd-kit/sortable': 10.0.0(@dnd-kit/core@6.3.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
       '@dnd-kit/utilities': 3.2.2(react@19.0.0)
       '@supabase/ssr': 0.6.1(@supabase/supabase-js@2.49.2)
       '@supabase/supabase-js': 2.49.2
+      logrocket: 10.1.0
+      logrocket-react: 5.0.1(logrocket@10.1.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       next: 15.2.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
