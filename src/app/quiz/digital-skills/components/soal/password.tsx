@@ -12,7 +12,7 @@ export default function PasswordStrength({
 }) {
   const user = useUser();
 
-  const timeLimit = 30;
+  const timeLimit = 120;
   const [timeLeft, setTimeLeft] = useState(timeLimit);
   const [password, setPassword] = useState("");
   const [score, setScore] = useState(1);
@@ -59,14 +59,7 @@ export default function PasswordStrength({
       }
     };
   }, [showFinish, showStart]);
-  useEffect(() => {
-    if (timeLeft === 0 && !showFinish) {
-      setScore(
-        evaluateScore({ isCorrect: false, timeUsed: timeLimit, timeLimit })
-      );
-      setShowFinish(true);
-    }
-  }, [timeLeft, showFinish]);
+
 
   const getFeedback = (score: number): { message: string; color: string } => {
     if (score <= 4) return { message: "Password lemah", color: "text-red-500" };
