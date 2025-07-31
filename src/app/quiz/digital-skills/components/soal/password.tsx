@@ -3,7 +3,7 @@ import SoalContainer from "./soalContainer";
 import FinishPopup from "@/app/quiz/digital-skills/components/finishPopUp";
 import StartPopup from "../startPopUp";
 import { useUser } from "@/context/UserContext";
-import { evaluateScore } from "@/utils/evaluate";
+
 
 export default function PasswordStrength({
   onFinish,
