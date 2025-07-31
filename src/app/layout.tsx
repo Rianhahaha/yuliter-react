@@ -30,27 +30,27 @@ export const metadata: Metadata = {
     shortcut: "/favicon.png",
     apple: "/favicon.png", // opsional untuk perangkat Apple
   },
-  openGraph: {
-    title: "Yu-Liter",
-    description: "Tingkatkan Literasi Digitalmu, Kuasai Dunia Maya!",
-    url: "https://yuliter.fun", // ganti dengan domain kamu
-    siteName: "Yu-Liter",
-    images: [
-      {
-        url: "/thumbnail.png", // path ke thumbnail OG image
-        width: 1200,
-        height: 630,
-        alt: "Yu-Liter OG Image",
-      },
-    ],
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Yu-Liter",
-    description: "Tingkatkan Literasi Digitalmu, Kuasai Dunia Maya!",
-    images: ["/thumbnail.png"], // bisa sama dengan openGraph
-  },
+  // openGraph: {
+  //   title: "Yu-Liter",
+  //   description: "Tingkatkan Literasi Digitalmu, Kuasai Dunia Maya!",
+  //   url: "https://yuliter.fun", // ganti dengan domain kamu
+  //   siteName: "Yu-Liter",
+  //   images: [
+  //     {
+  //       url: "/thumbnail.png", // path ke thumbnail OG image
+  //       width: 1200,
+  //       height: 630,
+  //       alt: "Yu-Liter OG Image",
+  //     },
+  //   ],
+  //   type: "website",
+  // },
+  // twitter: {
+  //   card: "summary_large_image",
+  //   title: "Yu-Liter",
+  //   description: "Tingkatkan Literasi Digitalmu, Kuasai Dunia Maya!",
+  //   images: ["/thumbnail.png"], // bisa sama dengan openGraph
+  // },
 };
 
 export default function RootLayout({
