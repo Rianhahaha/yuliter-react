@@ -1,7 +1,7 @@
 // app/quiz/page.tsx atau src/app/quiz/page.tsx (tergantung struktur)
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import QuestionEngine from "./components/questionEngine";
 import QuizResult from "./components/quizResult";
 import { supabase } from "@/utils/supabaseClient";
