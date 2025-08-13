@@ -2,7 +2,7 @@
 
 :root {
   --background: #090029;
-  --background2: #1C1437;
+  --background2: #1c1437;
 }
 
 @theme inline {
@@ -16,15 +16,31 @@
   --animate-shake-infinite: shake 0.5s ease-in-out infinite;
   --animate-finish-bg: finish-bg 0.5s ease-in-out;
   --animate-finish: finish 0.3s ease-in-out;
-  --color-mainPink: #E80BAA;
-  --color-mainPurple: #5D39EF;
-  --color-mainBorder: #A122CD;
+  --color-mainPink: #e80baa;
+  --color-mainPurple: #5d39ef;
+  --color-mainBorder: #a122cd;
+  @keyframes bounce-custom {
+    0%,
+    100% {
+      transform: translateY(-25%);
+      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+      filter: drop-shadow(0 0 14px rgba(255, 255, 180, 1))
+        drop-shadow(0 0 25px rgba(255, 255, 150, 0.9));
+    }
+    50% {
+      transform: none;
+      animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+      filter: drop-shadow(0 0 0px rgba(255, 255, 180, 0.8))
+        drop-shadow(0 0 0px rgba(255, 255, 150, 0.6));
+    }
+  }
   @keyframes shake {
-    0%, 100%
-    {
+    0%,
+    100% {
       transform: translate(0, 0);
     }
-    25%, 75% {
+    25%,
+    75% {
       transform: translate(-4px, 4px);
     }
     50% {
@@ -32,8 +48,7 @@
     }
   }
   @keyframes finish {
-    0%
-    {
+    0% {
       transform: scale(0);
     }
     90% {
@@ -44,17 +59,22 @@
     }
   }
   @keyframes finish-bg {
-    0%
-    {
-      opacity:0
+    0% {
+      opacity: 0;
     }
     100% {
-      opacity:100
+      opacity: 100;
     }
   }
 }
-* {
-  scroll:smooth;
+
+html {
+  scroll-behavior: smooth;
+}
+.animate-bounce-glow {
+  animation: bounce-custom 1s infinite;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 150, 0.8))
+    drop-shadow(0 0 15px rgba(255, 255, 150, 0.6));
 }
 .hovered {
   @apply transition-all duration-200 ease-in-out;
@@ -82,17 +102,17 @@
   @apply cursor-pointer w-fit py-2 px-5 md:px-10 md:py-3 rounded-full bg-gradient-to-bl from-pink-800 to-red-500 text-white font-main transition-all duration-200 ease-in-out border-t-2 text-sm md:text-lg border-white shadow-[inset_0px_-4px_0px_3px_#00000030] hover:shadow-[inset_0px_0px_0px_0px_#00000030] hover:translate-y-1 tracking-widest;
 }
 .google-button {
-  background:linear-gradient(-120deg, #4285f4, #34a853, #fbbc05, #ea4335);
+  background: linear-gradient(-120deg, #4285f4, #34a853, #fbbc05, #ea4335);
   @apply cursor-pointer w-fit px-10 py-3 rounded-full text-white font-main transition-all duration-200 ease-in-out border-t-2 text-lg border-white shadow-[inset_0px_-4px_0px_3px_#00000030] hover:shadow-[inset_0px_0px_0px_0px_#00000030] hover:translate-y-1 tracking-widest;
 }
 .dashboard-item {
-  @apply  relative  w-full h-[15rem] p-5 rounded-xl bg-gradient-to-tr to-transparent text-white font-main transition-all duration-200 ease-in-out border-t text-lg border-white/20 shadow-[inset_0px_-4px_0px_3px_#00000030] hover:scale-[102%] tracking-widest;
+  @apply relative  w-full h-[15rem] p-5 rounded-xl bg-gradient-to-tr to-transparent text-white font-main transition-all duration-200 ease-in-out border-t text-lg border-white/20 shadow-[inset_0px_-4px_0px_3px_#00000030] hover:scale-[102%] tracking-widest;
 }
 .leaderboard-item {
-  @apply  relative  w-2/3 p-5 rounded-xl bg-gradient-to-t text-white font-main transition-all duration-200 ease-in-out border-t text-lg border-white/20 shadow-[inset_0px_-4px_0px_3px_#00000030] hover:-translate-y-2 tracking-widest;
+  @apply relative  w-2/3 p-5 rounded-xl bg-gradient-to-t text-white font-main transition-all duration-200 ease-in-out border-t text-lg border-white/20 shadow-[inset_0px_-4px_0px_3px_#00000030] hover:-translate-y-2 tracking-widest;
 }
 
 body {
-  color:white;
+  color: white;
   font-family: Arial, Helvetica, sans-serif;
 }

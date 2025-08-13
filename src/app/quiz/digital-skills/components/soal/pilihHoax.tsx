@@ -228,7 +228,7 @@ export default function SoalDeteksiHoaks({
         >
           <div className="text-3xl mb-2 w-full text-center space-y-2">
             <div>
-              {selectedIndex
+              {selectedIndex !== null && shuffled[selectedIndex].isHoax
                 ? "Yay! Jawabanmu benar!"
                 : "Lebih teliti lagi yaaaa :D"}
             </div>

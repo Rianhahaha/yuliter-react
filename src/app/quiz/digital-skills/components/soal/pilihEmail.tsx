@@ -143,7 +143,11 @@ export default function SoalPilihEmail({
           onClose={handleFinish}
         >
           <div className="text-3xl mb-2 w-full text-center space-y-2">
-           
+                       <div>
+              {selectedIndex !== null && shuffledEmails[selectedIndex!].isLegit
+                ? "Yay! Kamu memilih email yang benar!"
+                : "Email Scam nih! Lebih teliti lagi yaaaa :D"}
+            </div>
           </div>
         </FinishPopup>
       )}

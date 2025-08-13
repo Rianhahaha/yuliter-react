@@ -60,9 +60,9 @@ export default function RootLayout({
 }>) {
 
   return (
-    <html lang="en">
+    <html lang="en" className="!scroll-smooth">
       <body
-        className={`${main.variable} ${secondary.variable} ${text.variable} antialiased h-dvh`}
+        className={`${main.variable} ${secondary.variable} ${text.variable} scroll-smooth h-dvh`}
       >
         <UserProvider>
           <QuizHistoryProvider>

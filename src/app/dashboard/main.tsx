@@ -148,7 +148,7 @@ export default function MainDashboard({
                   <div className="dashboard-item from-sky-600  group">
                     <div className="flex flex-col justify-end leading-[4rem] h-full">
                       <span className="text-[1.5rem] leading-8">
-                        Skor Terakhir
+                        Skor Terbaru
                       </span>
                       <span className="text-[5rem]">{latestScore}</span>
                     </div>

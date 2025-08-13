@@ -126,7 +126,7 @@ export default function PilihFileHRD({
         >
           <div className="text-3xl mb-2 w-full text-center space-y-2">
             <div>
-              {files[selectedIndex!]?.isTrue
+              {selectedIndex !== null && files[selectedIndex!]?.isTrue
                 ? "Yay! Jawabanmu benar!"
                 : "Lebih teliti lagi yaaaa :D"}
             </div>
