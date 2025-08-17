@@ -11,7 +11,7 @@ import { useQuizHistory } from "@/context/QuizHistoryContext";
 import EditProfilePage from "../edit-profile/page";
 import Leaderboard from "../leaderboard/leaderboardContainer";
 import Bg from "@/component/bg";
-import { useLeaderboard } from "@/context/LeaderboardContext";
+// import { useLeaderboard } from "@/context/LeaderboardContext";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -21,7 +21,7 @@ export default function DashboardPage() {
 
   const { history } = useQuizHistory();
   const user = useUser();
-  const { refreshLeaders } = useLeaderboard();
+  // const { refreshLeaders } = useLeaderboard();
   useEffect(() => {
     if (user === undefined) return; // ⏳ masih loading user
     if (!user) {
