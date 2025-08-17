@@ -32,7 +32,7 @@ export default function DashboardPage() {
   if (user === undefined) return <Loading />;
   if (!user) return <Loading />; // optionally return nothing (karena sedang push)
 
-  refreshLeaders();
+  // refreshLeaders();
   const handleOpen = () => {
     setOpen(!open);
   };

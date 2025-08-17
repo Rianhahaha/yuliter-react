@@ -35,6 +35,7 @@ export const QuizHistoryProvider = ({ children }: { children: ReactNode }) => {
       .select("id,score, duration, created_at, profiles:profiles_id(full_name), profiles_id")
       .eq("profiles_id", profile_id)
       .order("created_at", { ascending: false });
+      console.log(data);
 
     if (error) {
       console.error("Error fetching quiz history:", error);
@@ -52,6 +53,8 @@ export const QuizHistoryProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (profile_id) {
+           console.log("HistoryProvider mounted");
+
       fetchHistory();
     }
   }, [profile_id, fetchHistory]);

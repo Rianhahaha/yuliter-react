@@ -30,6 +30,7 @@ export const LeaderboardProvider = ({ children }: { children: ReactNode }) => {
   const [leaders, setLeaders] = useState<Leader[]>([]);
 
   const fetchLeaderboard = async () => {
+    console.log("fetchLeaderboard dipanggil"); // 👀 cek frekuensi
     const { data, error } = await supabase
       .from('digital_skills_responses')
       .select('score, duration, created_at, profiles:profiles_id(full_name), profiles_id')
@@ -68,6 +69,7 @@ export const LeaderboardProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
+     console.log("LeaderboardProvider mounted");
     fetchLeaderboard();
   }, []);
 
